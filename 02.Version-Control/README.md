@@ -59,3 +59,12 @@ Membuat permintaan untuk menggabungkan perubahan dari satu branch ke branch lain
 
 ## Workflow Collaboration
 
+Alur workflow collaboration adalah sebagai berikut : 
+Branching → Commit → Push → Pull Request → Code Review → Merge.
+
+Workflow ini memungkinkan kolaborasi terstruktur dan memastikan bahwa semua perubahan terintegrasi dengan aman ke dalam proyek utama.
+
+Beberapa contoh nya yaitu
+- Github Flow
+- Git Flow
+- Trunk Base
