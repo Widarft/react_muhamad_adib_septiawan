@@ -56,3 +56,6 @@ Alur nya seperti ini
 ### PULL REQUEST
 
 Membuat permintaan untuk menggabungkan perubahan dari satu branch ke branch lain (biasanya branch utama) di repository remote (seperti GitHub).
+
+## Workflow Collaboration
+
