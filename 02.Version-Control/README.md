@@ -55,4 +55,4 @@ Alur nya seperti ini
 
 ### PULL REQUEST
 
-Mengajukan permintaan untuk menggabungkan perubahan dari satu branch ke branch lain (biasanya branch utama) di repository remote (seperti GitHub).
+Membuat permintaan untuk menggabungkan perubahan dari satu branch ke branch lain (biasanya branch utama) di repository remote (seperti GitHub).
