@@ -176,7 +176,7 @@ nav ul li a:hover {
   padding: 50px;
   display: flex;
   justify-content: center;
-  gap: 150px;
+  gap: 100px;
 }
 
 .footer-content h2 {
