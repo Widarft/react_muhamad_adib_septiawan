@@ -309,7 +309,7 @@ html {
   }
 
   .hero-img img {
-    max-width: 100%;
+    margin-top: 50px;
   }
 
   .newsletter-form {
@@ -329,6 +329,12 @@ html {
     align-items: center;
     text-align: center;
     gap: 30px;
+  }
+  .image-placeholder-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    justify-content: space-between;
   }
 }
 
@@ -353,11 +359,5 @@ html {
   nav ul li {
     display: block;
     margin-bottom: 10px;
-  }
-  .image-placeholder-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px 0;
-    justify-content: space-between;
   }
 }
