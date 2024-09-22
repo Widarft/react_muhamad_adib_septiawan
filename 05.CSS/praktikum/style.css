@@ -21,6 +21,7 @@ body {
 
 header {
   font-family: roboto;
+  font-size: 24px;
   padding: 10px 10px;
 }
 nav {
@@ -29,12 +30,23 @@ nav {
   align-items: center;
 }
 
+.burger-menu {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#toggle-menu {
+  display: none;
+}
+
 h1 {
   margin: 0;
 }
 
 nav ul {
   list-style: none;
+  font-size: 16px;
   display: flex;
   margin: 0px;
   padding: 0px;
@@ -72,47 +84,32 @@ nav ul li a:hover {
 }
 
 .hero-content h2 {
-  font-size: 50px;
+  font-size: 48px;
   margin-bottom: 0px;
   color: white;
 }
 
 .hero-content p {
-  font-size: 20px;
+  font-size: 24px;
   margin-top: 0px;
   margin-bottom: 50px;
   color: #ffffff99;
 }
 
-.button-started {
-  text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  margin-right: 50px;
-  border-radius: 20px;
-  transition: color 0.3s ease;
-}
-
-.button-started:hover {
-  background-color: #47b2e4;
-  color: white;
-}
-
+.button-started,
 .button-video {
   text-decoration: none;
+  font-size: 16px;
   color: white;
   padding: 10px 20px;
   border-radius: 20px;
   transition: color 0.3s ease;
 }
 
+.button-started:hover,
 .button-video:hover {
   background-color: #47b2e4;
   color: white;
-}
-
-.hero-img {
-  padding: 50 px;
 }
 
 .newsletter {
@@ -125,32 +122,52 @@ nav ul li a:hover {
 
 .newsletter h3 {
   font-family: jost;
-  font-size: 20px;
+  font-size: 24px;
   color: #37517e;
   margin-bottom: 0px;
 }
 
 .newsletter p {
   font-family: openSans;
+  font-size: 15px;
+  padding-bottom: 10px;
   color: #444444;
 }
 
-.newsletter input[type="email"] {
-  padding: 10px;
-  width: 500px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 50px;
 }
 
-.newsletter button {
-  text-decoration: none;
-  color: white;
+.newsletter-form input[type="email"] {
+  padding: 15px 20px;
+  width: 500px;
+  border: none;
+  border-radius: 50px 0 0 50px;
+  outline: none;
+}
+
+.newsletter-form button {
+  padding: 15px 20px;
+  margin: 0px;
+  border: none;
   background-color: #47b2e4;
-  border-color: white;
-  padding: 10px 20px;
-  margin-right: 50px;
-  border-radius: 20px;
-  transition: color 0.3s ease;
+  color: white;
+  font-size: 16px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #007bb5;
+}
+
+.newsletter-form input[type="email"]::placeholder {
+  color: #aaa;
+  font-size: 14px;
 }
 
 .footer-content {
@@ -163,15 +180,18 @@ nav ul li a:hover {
 }
 
 .footer-content h2 {
+  font-size: 28px;
   color: #37517e;
 }
 
 .footer-content h4 {
+  font-size: 16px;
   color: #37517e;
 }
 
 footer ul {
   list-style: none;
+  font-size: 14px;
   padding: 0;
 }
 
@@ -207,8 +227,137 @@ footer p {
 }
 
 .copyright {
+  font-size: 14px;
   background-color: #37517e;
   color: #ffffff;
   margin: 0px;
   padding: 10px 50px;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.hero-img img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .burger-menu {
+    display: block;
+  }
+  nav {
+    margin-top: 10px;
+  }
+
+  nav h1 {
+    margin-bottom: 10px;
+  }
+
+  nav ul {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 60px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100vw;
+    box-sizing: border-box;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  nav ul li a {
+    display: block;
+    text-align: left;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+  }
+
+  #toggle-menu:checked + .burger-menu + #nav-links {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  nav ul li a:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+
+  .hero {
+    flex-direction: column;
+    padding: 50px 20px;
+    text-align: center;
+  }
+
+  .hero-content h2 {
+    font-size: 36px;
+  }
+
+  .hero-content p {
+    font-size: 18px;
+  }
+
+  .hero-img img {
+    max-width: 100%;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .newsletter-form input[type="email"],
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 50px;
+    margin-top: 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content h2 {
+    font-size: 24px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .hero-img img {
+    max-width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .image-placeholder-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    justify-content: space-between;
+  }
 }
