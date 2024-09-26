@@ -998,6 +998,14 @@ video {
   padding-right: 2.5rem;
 }
 
+.pl-\[93px\] {
+  padding-left: 93px;
+}
+
+.pr-\[81px\] {
+  padding-right: 81px;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1085,6 +1093,11 @@ video {
 .text-white-footer {
   --tw-text-opacity: 1;
   color: rgb(94 94 94 / var(--tw-text-opacity));
+}
+
+.text-blue-hover-btn {
+  --tw-text-opacity: 1;
+  color: rgb(71 178 228 / var(--tw-text-opacity));
 }
 
 .shadow-lg {
