@@ -2,7 +2,7 @@
 
 Tailwind CSS merupakan sebuah tools yang dapat mempermudah developer dalam mmembuat tampilan website dengan lebih mudah dan cepat dibandingkan dengan CSS konvensional. Dalam penggunaannya Tailwind CSS ini menyediakan kelas-kelas atau aturan kecil, sehingga pengguna tidak perlu menuliskan code yang panjang lebar seperti pada CSS biasa.
 
-### Cara Penggunaan Tailwind
+## Cara Penggunaan Tailwind
 
 Untuk penggunaannya CSS dapat di import pada VSC dengan dua cara yaitu CLI dan CDN.
 
