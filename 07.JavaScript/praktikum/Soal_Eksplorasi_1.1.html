@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quote Generator</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      #quote {
+        font-size: 24px;
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 50px;
+        width: 80%;
+        text-align: center;
+      }
+
+      #button {
+        text-decoration: none;
+        background-color: blue;
+        color: white;
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        display: inline-block;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      #button:hover {
+        background-color: #47b2e4;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="quote">Kutipan akan muncul di sini.</div>
+    <button id="button" onclick="displayQuote()">Generate Quote</button>
+
+    <script>
+      const quotes = [
+        "Batasan satu-satunya untuk esok adalah keraguan kita hari ini.",
+        "Tujuan hidup kita adalah untuk bahagia.",
+        "Hidup adalah apa yang terjadi saat kita sibuk membuat rencana lain.",
+      ];
+
+      function displayQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
+        document.getElementById("quote").innerText = randomQuote;
+      }
+    </script>
+  </body>
+</html>
