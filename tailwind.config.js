@@ -4,6 +4,8 @@ module.exports = {
     "./src/**/*.{html,js}",
     "./06.BOOTSTRAP/praktikum/landingPage.html",
     "./06.BOOTSTRAP/praktikum/createProduct.html",
+    "./03.Figma/praktikum/landingPage.html",
+    "./03.Figma/praktikum/createProduct.html",
     ,
   ],
   theme: {
