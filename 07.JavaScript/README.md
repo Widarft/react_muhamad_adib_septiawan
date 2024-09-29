@@ -25,6 +25,9 @@ contoh penggunaannya adalah
 `let [firstFruit, secondFruit] = fruits;`
 
 `console.log(firstFruit);  // Output: Apple`
+
 `console.log(secondFruit); // Output: Banana`
 
-Dapat dilihat bahwa [[firstFruit, secondFruit]] merupakan destructuring untuk mengambil nilai pada array `["Apple", "Banana", "Orange"]`
+Dapat dilihat bahwa `[firstFruit, secondFruit]` merupakan destructuring untuk mengambil nilai pada array `["Apple", "Banana", "Orange"]`
+
+
