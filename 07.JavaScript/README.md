@@ -19,6 +19,7 @@ Kemudian yang perlu diketahui adalah scoping, yaitu menentukan variabel, fungsi 
 Destructuring adalah sebuah ekpresi untuk menyalin nilai dari array atau properti dari object, ke dalam variabel yang berbeda.
 
 contoh penggunaannya adalah
+
 `let fruits = ["Apple", "Banana", "Orange"];`
 
 `let [firstFruit, secondFruit] = fruits;`
