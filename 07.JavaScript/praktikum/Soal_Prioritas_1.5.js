@@ -8,4 +8,5 @@ const greetUserArrow = (name) => {
 };
 
 console.log(greetUser("Adib"));
+console.log("----------------------");
 console.log(greetUserArrow("Vira"));
