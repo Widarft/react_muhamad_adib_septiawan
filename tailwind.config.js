@@ -6,6 +6,8 @@ module.exports = {
     "./06.BOOTSTRAP/praktikum/createProduct.html",
     "./03.Figma/praktikum/landingPage.html",
     "./03.Figma/praktikum/createProduct.html",
+    "./09.Introduction-Data-Structures/praktikum/createProduct.html",
+    "./09.Introduction-Data-Structures/praktikum/tabel.html",
     ,
   ],
   theme: {
