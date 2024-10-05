@@ -78,9 +78,9 @@
               minlength="6"
               required
               placeholder="Enter product name"
-              class="w-[282px] px-4 py-2 mb-1 border rounded-md focus:ring focus:ring-bs-blue focus:outline-none"
+              class="w-[282px] px-4 py-2 mb-1 border rounded-md focus:ring focus:ring-bs-blue focus:outline-none peer"
             />
-            <p class="text-sm mt-1 hidden peer-invalid:block">
+            <p class="text-sm mt-1 text-red-500 hidden peer-invalid:block">
               Product Name must be at least 6 characters.
             </p>
           </div>
@@ -204,8 +204,8 @@
           </div>
 
           <div
-            class="fixed inset-0 flex items-center justify-center z-50 hidden"
             id="modal"
+            class="fixed inset-0 flex items-center justify-center z-50 hidden"
           >
             <div class="bg-gray-800 bg-opacity-50 absolute inset-0"></div>
             <div class="bg-white rounded-lg overflow-hidden shadow-lg z-10 p-6">
@@ -214,13 +214,13 @@
               <div class="flex justify-end mt-4 space-x-4">
                 <button
                   id="cancelSubmit"
-                  class="bg-red-500 text-white px-4 py-2 rounded-lg"
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700"
                 >
                   No
                 </button>
                 <button
                   id="confirmSubmit"
-                  class="bg-green-500 text-white px-4 py-2 rounded-lg"
+                  class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700"
                 >
                   Yes
                 </button>
@@ -228,19 +228,70 @@
             </div>
           </div>
         </form>
+        <hr />
+        <main class="container mx-auto mt-12 font-roboto">
+          <h2 class="text-3xl font-bold text-center mb-8">Product List</h2>
+
+          <table
+            class="min-w-full table-auto border-collapse border border-gray-400"
+          >
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-4 py-2 border border-gray-400">No</th>
+                <th class="px-4 py-2 border border-gray-400">Product Name</th>
+                <th class="px-4 py-2 border border-gray-400">Category</th>
+                <th class="px-4 py-2 border border-gray-400">Freshness</th>
+                <th class="px-4 py-2 border border-gray-400">Price</th>
+                <th class="px-4 py-2 border border-gray-400">Product Image</th>
+                <th class="px-4 py-2 border border-gray-400">Description</th>
+              </tr>
+            </thead>
+            <tbody id="productTableBody"></tbody>
+          </table>
+
+          <div class="flex justify-center space-x-4 my-6">
+            <button
+              id="deleteLast"
+              class="bg-red-500 text-white py-2 px-4 rounded-sm hover:bg-red-700"
+            >
+              Delete Last Product
+            </button>
+            <button
+              id="searchProduct"
+              class="bg-blue-500 text-white py-2 px-4 rounded-sm hover:bg-blue-700"
+            >
+              Search Product by Name
+            </button>
+          </div>
+        </main>
       </div>
     </main>
 
     <script>
       const form = document.getElementById("productForm");
       const modal = document.getElementById("modal");
-      const confirmSubmit = document.getElementById("confirmSubmit");
       const cancelSubmit = document.getElementById("cancelSubmit");
-
+      const confirmSubmit = document.getElementById("confirmSubmit");
       let reader = new FileReader();
 
+      // Prevent direct submit and show modal
       form.addEventListener("submit", function (event) {
         event.preventDefault();
+        modal.classList.remove("hidden");
+      });
+
+      // "No" button to close modal
+      cancelSubmit.addEventListener("click", function () {
+        modal.classList.add("hidden");
+      });
+
+      // "Yes" button to process submit
+      confirmSubmit.addEventListener("click", function () {
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          modal.classList.add("hidden");
+          return;
+        }
 
         const productName = document.getElementById("productName").value;
         const productCategory =
@@ -252,39 +303,132 @@
         const description = document.getElementById("description").value;
         const price = document.getElementById("price").value;
 
-        if (form.checkValidity()) {
-          modal.classList.remove("hidden");
-
-          confirmSubmit.addEventListener("click", function () {
-            reader.readAsDataURL(productImage);
-            reader.onload = function () {
-              const product = {
-                productName,
-                productCategory,
-                productImage: reader.result,
-                freshness,
-                description,
-                price,
-              };
-
-              let products = JSON.parse(localStorage.getItem("products")) || [];
-              products.push(product);
-              localStorage.setItem("products", JSON.stringify(products));
-
-              modal.classList.add("hidden");
-              form.reset();
-              window.location.href = "./tabel.html";
-            };
-          });
-
-          cancelSubmit.addEventListener("click", function () {
-            modal.classList.add("hidden");
-            window.location.href = "./createProduct.html";
-          });
+        if (productImage) {
+          reader.readAsDataURL(productImage);
+          reader.onload = function () {
+            saveProduct(
+              productName,
+              productCategory,
+              reader.result,
+              freshness,
+              description,
+              price
+            );
+          };
         } else {
-          form.classList.add("was-validated");
+          saveProduct(
+            productName,
+            productCategory,
+            null,
+            freshness,
+            description,
+            price
+          );
         }
       });
+
+      function saveProduct(
+        productName,
+        productCategory,
+        productImage,
+        freshness,
+        description,
+        price
+      ) {
+        const product = {
+          productName,
+          productCategory,
+          productImage,
+          freshness,
+          description,
+          price,
+        };
+
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        products.push(product);
+        localStorage.setItem("products", JSON.stringify(products));
+
+        loadProducts();
+        modal.classList.add("hidden");
+        form.reset();
+      }
+
+      // Function to load products from localStorage
+      function loadProducts() {
+        const products = JSON.parse(localStorage.getItem("products")) || [];
+        const tableBody = document.getElementById("productTableBody");
+
+        tableBody.innerHTML = "";
+
+        if (products.length === 0) {
+          const emptyRow = document.createElement("tr");
+          emptyRow.innerHTML = `<td colspan="7" class="text-center py-4">No products available</td>`;
+          tableBody.appendChild(emptyRow);
+        } else {
+          products.forEach((product, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td class="border px-4 py-2">${index + 1}</td>
+              <td class="border px-4 py-2">${product.productName}</td>
+              <td class="border px-4 py-2">${product.productCategory}</td>
+              <td class="border px-4 py-2">${product.freshness}</td>
+              <td class="border px-4 py-2">$${product.price}</td>
+              <td class="border px-4 py-2">
+                ${
+                  product.productImage
+                    ? `<img src="${product.productImage}" alt="Product Image" class="h-20 w-20 object-cover" />`
+                    : "No image"
+                }
+              </td>
+              <td class="border px-4 py-2">${product.description}</td>
+            `;
+            tableBody.appendChild(row);
+          });
+        }
+      }
+
+      // Load products when page first opens
+      window.onload = loadProducts;
+
+      // Button to delete last product
+      document
+        .getElementById("deleteLast")
+        .addEventListener("click", function () {
+          let products = JSON.parse(localStorage.getItem("products")) || [];
+          if (products.length > 0) {
+            products.pop();
+            localStorage.setItem("products", JSON.stringify(products));
+            loadProducts();
+          } else {
+            alert("No products available to delete.");
+          }
+        });
+
+      // Button to search product by name
+      document
+        .getElementById("searchProduct")
+        .addEventListener("click", function () {
+          let searchName = prompt("Enter product name to search:");
+          if (searchName) {
+            const products = JSON.parse(localStorage.getItem("products")) || [];
+            const foundProduct = products.find(
+              (product) =>
+                product.productName.toLowerCase() === searchName.toLowerCase()
+            );
+
+            if (foundProduct) {
+              alert(`
+              Product Name: ${foundProduct.productName}
+              Category: ${foundProduct.productCategory}
+              Freshness: ${foundProduct.freshness}
+              Price: $${foundProduct.price}
+              Description: ${foundProduct.description}
+            `);
+            } else {
+              alert("Product not found.");
+            }
+          }
+        });
     </script>
   </body>
 </html>
