@@ -268,21 +268,28 @@
     </main>
 
     <script>
+      // Get references to DOM elements
       const form = document.getElementById("productForm");
       const modal = document.getElementById("modal");
       const cancelSubmit = document.getElementById("cancelSubmit");
       const confirmSubmit = document.getElementById("confirmSubmit");
       let reader = new FileReader();
 
-      // Prevent direct submit and show modal
+      // Prevent direct submit and show confirmation modal
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         modal.classList.remove("hidden");
       });
 
-      // "No" button to close modal
+      //  When clicking outside of it
       const overlay = document.querySelector(".bg-gray-800");
       overlay.addEventListener("click", function () {
+        modal.classList.add("hidden");
+      });
+
+      // "No" button to close modal
+      cancelSubmit.addEventListener("click", function () {
+        console.log("Cancel clicked");
         modal.classList.add("hidden");
       });
 
@@ -295,6 +302,7 @@
           return;
         }
 
+        // Get form values
         const productName = document.getElementById("productName").value;
         const productCategory =
           document.getElementById("productCategory").value;
@@ -305,6 +313,7 @@
         const description = document.getElementById("description").value;
         const price = document.getElementById("price").value;
 
+        // Handle image upload and save product
         if (productImage) {
           reader.readAsDataURL(productImage);
           reader.onload = function () {
@@ -329,6 +338,7 @@
         }
       });
 
+      // Save product to localStorage
       function saveProduct(
         productName,
         productCategory,
@@ -355,7 +365,7 @@
         form.reset();
       }
 
-      // Function to load products from localStorage
+      // Load and display products from localStorage
       function loadProducts() {
         const products = JSON.parse(localStorage.getItem("products")) || [];
         const tableBody = document.getElementById("productTableBody");
@@ -379,7 +389,7 @@
                 ${
                   product.productImage
                     ? `<img src="${product.productImage}" alt="Product Image" class="h-20 w-20 object-cover" />`
-                    : "No image"
+                    : "No image" //Use if image can't be read
                 }
               </td>
               <td class="border px-4 py-2">${product.description}</td>
@@ -392,7 +402,7 @@
       // Load products when page first opens
       window.onload = loadProducts;
 
-      // Button to delete last product
+      // Button to delete last product from the list
       document
         .getElementById("deleteLast")
         .addEventListener("click", function () {
