@@ -17,13 +17,9 @@ const ProductForm = () => {
           id="productName"
           name="productName"
           minLength="6"
-          required
           placeholder="Enter product name"
           className="w-[282px] px-4 py-2 mb-1 border rounded-md focus:ring focus:ring-bs-blue focus:outline-none peer"
         />
-        <p className="text-sm mt-1 text-red-500 hidden peer-invalid:block">
-          Product Name must be at least 6 characters.
-        </p>
       </div>
 
       <div className="col-span-1">
@@ -36,7 +32,6 @@ const ProductForm = () => {
         <select
           id="productCategory"
           name="productCategory"
-          required
           className="w-[224px] px-3 py-2 mb-1 border border-gray-300 rounded-md focus:ring focus:ring-bs-blue focus:outline-none"
         >
           <option value="">Choose...</option>
@@ -46,9 +41,6 @@ const ProductForm = () => {
           <option value="tablet">Tablet</option>
           <option value="camera">Camera</option>
         </select>
-        <p class="text-sm mt-1 hidden peer-invalid:block">
-          Please select a product category.
-        </p>
       </div>
 
       <div className="col-span-1">
@@ -59,12 +51,8 @@ const ProductForm = () => {
           type="file"
           id="productImage"
           name="productImage"
-          required
           className="w-[202px] text-sm mb-1 border text-bs-blue border-bs-blue rounded-[4px] cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-bs-blue"
         />
-        <p class="text-sm mt-1 hidden peer-invalid:block">
-          Please upload an image of the product.
-        </p>
       </div>
 
       <div className="col-span-1">
@@ -77,7 +65,6 @@ const ProductForm = () => {
               type="radio"
               name="freshness"
               value="brandNew"
-              required
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Brand New</span>
@@ -89,7 +76,6 @@ const ProductForm = () => {
               type="radio"
               name="freshness"
               value="secondHand"
-              required
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Second Hand</span>
@@ -101,7 +87,6 @@ const ProductForm = () => {
               type="radio"
               name="freshness"
               value="refurbished"
-              required
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Refurbished</span>
@@ -117,12 +102,8 @@ const ProductForm = () => {
           id="description"
           name="description"
           rows="6"
-          required
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-bs-blue focus:outline-none"
         />
-        <p class="text-sm mt-1 hidden peer-invalid:block">
-          Please provide additional description.
-        </p>
       </div>
 
       <div className="col-span-1">
@@ -137,14 +118,10 @@ const ProductForm = () => {
             type="number"
             id="price"
             name="price"
-            required
             min="1"
             placeholder="1"
             className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-bs-blue focus:outline-none"
           />
-          <p class="text-sm mt-1 hidden peer-invalid:block">
-            Please enter a valid price.
-          </p>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../layout/Header";
-import ProductForm from "../layout/ProductForm";
+import Header from "../components/Header";
+import ProductForm from "../components/ProductForm";
 
 const CreateProduct = () => {
   return (
