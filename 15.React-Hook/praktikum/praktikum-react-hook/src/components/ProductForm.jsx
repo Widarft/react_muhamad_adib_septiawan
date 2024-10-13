@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const ProductForm = () => {
+const ProductForm = ({ addProduct, editProduct }) => {
   const [fileName, setFileName] = useState("No file chosen");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
@@ -63,6 +64,23 @@ const ProductForm = () => {
     setError((prev) => ({ ...prev, price: "" }));
   };
 
+  useEffect(() => {
+    if (editProduct) {
+      setProductName(editProduct.productName);
+      setProductCategory(editProduct.productCategory);
+      setProductFreshness(editProduct.productFreshness);
+      setDescription(editProduct.description || "");
+      setPrice(editProduct.price);
+    } else {
+      setProductName("");
+      setProductCategory("");
+      setProductFreshness("");
+      setDescription("");
+      setPrice("");
+      setFileName("No file chosen");
+    }
+  }, [editProduct]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -119,13 +137,22 @@ const ProductForm = () => {
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
+      const newProduct = {
+        id: editProduct ? editProduct.id : uuidv4(),
+        productName,
+        productCategory,
+        productFreshness,
+        price,
+      };
+      addProduct(newProduct);
       alert("Product created successfully!");
+
       setProductName("");
       setProductCategory("");
       setDescription("");
       setPrice("");
       setFileName("No file chosen");
-      setFreshness("");
+      setProductFreshness("");
       setError({});
       setIsSubmitted(false);
     }
@@ -247,6 +274,7 @@ const ProductForm = () => {
               name="freshness"
               value="brandNew"
               onChange={(e) => setProductFreshness(e.target.value)}
+              checked={productFreshness === "brandNew"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Brand New</span>
@@ -259,6 +287,7 @@ const ProductForm = () => {
               name="freshness"
               value="secondHand"
               onChange={(e) => setProductFreshness(e.target.value)}
+              checked={productFreshness === "secondHand"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Second Hand</span>
@@ -271,6 +300,7 @@ const ProductForm = () => {
               name="freshness"
               value="refurbished"
               onChange={(e) => setProductFreshness(e.target.value)}
+              checked={productFreshness === "refurbished"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
             <span className="ml-2">Refurbished</span>
@@ -337,7 +367,7 @@ const ProductForm = () => {
           type="submit"
           className="w-11/12 bg-bs-blue text-white py-2 px-4 my-[124px] rounded-md hover:bg-blue-hover-btn"
         >
-          Submit
+          {editProduct ? "Update Product" : "Submit"}
         </button>
       </div>
     </form>
