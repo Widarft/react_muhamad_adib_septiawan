@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 
 const ContactForm = () => {
-  // State to hold form data
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     message: "",
   });
 
-  // State to hold submitted data
   const [submittedData, setSubmittedData] = useState(null);
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmittedData(formData);
   };
 
-  // Function to handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

@@ -5,7 +5,7 @@ const Footer = () => {
     <div className="bg-white-background">
       <footer className="bg-black-footer text-white py-11 px-4 mx-12 md:px-8 rounded-3xl">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and description */}
+          {/* Logo */}
           <div className="flex flex-col items-center text-center md:text-left md:col-span-1">
             <img
               src="./src/assets/image/A.png"
@@ -15,6 +15,7 @@ const Footer = () => {
             <h2 className="text-base font-semibold pt-5">ADIB.COM</h2>
           </div>
 
+          {/* Description */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h2 className="text-lg font-semibold">HALLO SEMUA!</h2>
             <p className="text-sm mt-2 text-gray-font">
