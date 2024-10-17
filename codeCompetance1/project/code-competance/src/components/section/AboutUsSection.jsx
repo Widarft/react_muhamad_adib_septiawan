@@ -1,16 +1,14 @@
 import React from "react";
+import MainButton from "../button/MainButton";
 
 const AboutUsSection = () => {
   return (
-    <div className="min-h-screen flex justify-center items-center bg-white-background">
+    <div className="flex justify-center items-center bg-white-background">
       <div
         className="relative w-full max-w-[1325px] p-16 rounded-3xl"
         style={{ backgroundImage: "url('./src/assets/image/grid.png')" }}
       >
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-black opacity-90 rounded-3xl"></div>
-
-        {/* Content */}
         <div className="relative z-10 text-white grid grid-cols-2 gap-4">
           {/* Left Side */}
           <div className="flex flex-col justify-center">
@@ -33,9 +31,7 @@ const AboutUsSection = () => {
               Jika kalian penasaran tentangku <br /> ayo klik tombol dibawah
               ini!
             </p>
-            <button className="px-8 py-3 bg-white text-black rounded-full font-bold border-2 border-black shadow-lg flex items-center hover:bg-gray-200 transition duration-300">
-              ABOUT US
-            </button>
+            <MainButton label="ABOUT US" path="/about" />
           </div>
         </div>
       </div>

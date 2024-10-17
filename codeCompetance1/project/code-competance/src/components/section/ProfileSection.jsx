@@ -2,34 +2,33 @@ import React from "react";
 
 const ProfileSection = () => {
   return (
-    <div className="max-w-6xl mx-auto p-8">
-      {/* Grid layout */}
+    <div className="max-w-6xl mx-auto py-32">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Personal Section */}
-        <div>
+        <div className="flex flex-col justify-center py-8">
           <h2 className="text-xl font-bold mb-2">PERSONAL</h2>
           <p className="text-sm">
             Perkenalkan nama saya Muhamad Adib Septiawan. Kelahiran Bogor, 22
             September 2001. Saat ini saya tinggal di Karawang, Jawa Barat.
           </p>
         </div>
-        <div>
+        <div className="py-8">
           <img
-            src="./src/assets/image/personal.jpg"
+            src="./src/assets/image/personal.png"
             alt="Personal"
             className="w-full h-auto rounded-lg object-cover"
           />
         </div>
 
         {/* Pendidikan Section */}
-        <div>
+        <div className="py-8">
           <img
-            src="./src/assets/image/pendidikan.jpg"
+            src="./src/assets/image/pendidikan.png"
             alt="Pendidikan"
             className="w-full h-auto rounded-lg object-cover"
           />
         </div>
-        <div>
+        <div className="flex flex-col justify-center py-8">
           <h2 className="text-xl font-bold mb-2">PENDIDIKAN</h2>
           <p className="text-sm">
             Saat ini saya sedang menempuh pendidikan S1 Jurusan Sistem Informasi
@@ -38,7 +37,7 @@ const ProfileSection = () => {
         </div>
 
         {/* Pengalaman Developer Section */}
-        <div>
+        <div className="flex flex-col justify-center py-8">
           <h2 className="text-xl font-bold mb-2">PENGALAMAN DEVELOPER</h2>
           <p className="text-sm">
             Di semester kemarin saya mengikuti MSIB Android Developer dan
@@ -47,23 +46,23 @@ const ProfileSection = () => {
             Front-End Developer.
           </p>
         </div>
-        <div>
+        <div className="py-8">
           <img
-            src="./src/assets/image/pengalaman.jpg"
+            src="./src/assets/image/pengalaman.png"
             alt="Pengalaman Developer"
             className="w-full h-auto rounded-lg object-cover"
           />
         </div>
 
         {/* Hobi Section */}
-        <div>
+        <div className="py-8">
           <img
-            src="./src/assets/image/hobi.jpg"
+            src="./src/assets/image/hobi.png"
             alt="Hobi"
             className="w-full h-auto rounded-lg object-cover"
           />
         </div>
-        <div>
+        <div className="flex flex-col justify-center py-8">
           <h2 className="text-xl font-bold mb-2">HOBI</h2>
           <p className="text-sm">
             Kegiatan yang sangat saya sukai adalah olahraga basket dan juga

@@ -5,7 +5,7 @@ import AboutUsHeroSection from "../components/section/AboutUsHeroSection";
 import ProfileSection from "../components/section/ProfileSection";
 const AboutUsPage = () => {
   return (
-    <div>
+    <div className="bg-white-background">
       <Header />
       <br />
       <AboutUsHeroSection />

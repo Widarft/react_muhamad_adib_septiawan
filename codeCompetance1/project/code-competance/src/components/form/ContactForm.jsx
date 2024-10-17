@@ -23,7 +23,10 @@ const ContactForm = () => {
     setFormData({ ...formData, [name]: value });
   };
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white-background">
+    <div
+      id="contact"
+      className="flex flex-col items-center justify-center py-40 bg-white-background"
+    >
       <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-black w-full max-w-5xl relative">
         <h1 className="text-3xl font-bold mb-6 text-left">CONTACT US</h1>
 
@@ -43,7 +46,7 @@ const ContactForm = () => {
               value={formData.username}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-full border-2 border-black shadow focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
-              placeholder="Username"
+              placeholder="Masukkan username anda"
               required
             />
           </div>
@@ -59,7 +62,7 @@ const ContactForm = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-full border-2 border-black shadow focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
-              placeholder="email"
+              placeholder="Masukkan email anda"
               required
             />
           </div>

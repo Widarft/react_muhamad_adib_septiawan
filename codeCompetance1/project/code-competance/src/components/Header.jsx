@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <header className="bg-white-background py-4 px-8 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -9,24 +16,24 @@ const Header = () => {
 
         {/* Navigation */}
         <nav className="flex space-x-0 border-2 border-black rounded-full">
-          <a
-            href="#home"
-            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white transition-all duration-300 ease-in"
+          <button
+            onClick={() => handleNavigation("/")}
+            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             HOME
-          </a>
-          <a
-            href="#contact"
-            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white transition-all duration-300 ease-in"
+          </button>
+          <button
+            onClick={() => handleNavigation("/contact")}
+            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             CONTACT
-          </a>
-          <a
-            href="#about"
-            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white transition-all duration-300 ease-in"
+          </button>
+          <button
+            onClick={() => handleNavigation("/about")}
+            className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             ABOUT
-          </a>
+          </button>
         </nav>
 
         {/* Login Button */}

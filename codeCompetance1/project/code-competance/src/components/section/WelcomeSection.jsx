@@ -1,9 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const WelcomeSection = () => {
+  const navigate = useNavigate();
+
+  const handleGetStartedClick = () => {
+    navigate("/about");
+  };
+
   return (
     <section
-      className="flex items-center justify-between px-32 py-12 bg-white-background min-h-screen"
+      className="flex items-center justify-between px-32 py-48 bg-white-background"
       style={{ backgroundImage: "url('./src/assets/image/grid.png')" }}
     >
       {/* Welcome */}
@@ -16,9 +23,9 @@ const WelcomeSection = () => {
 
       {/* Button */}
       <div>
-        <a
-          href="#get-started"
-          className=" bg-white-background inline-flex items-center justify-center px-8 py-4 border-2 border-black rounded-full text-black font-semibold transition-all duration-300 ease-in-out hover:bg-black hover:text-white"
+        <button
+          onClick={handleGetStartedClick}
+          className="bg-white-background inline-flex items-center justify-center px-8 py-4 border-2 border-black rounded-full text-black font-semibold transition-all duration-300 ease-in-out hover:bg-black hover:text-white"
         >
           GET STARTED
           <svg
@@ -34,7 +41,7 @@ const WelcomeSection = () => {
               d="M1 8a.5.5 0 0 1 .5-.5h12.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L14.293 8.5H1.5A.5.5 0 0 1 1 8z"
             />
           </svg>
-        </a>
+        </button>
       </div>
     </section>
   );
