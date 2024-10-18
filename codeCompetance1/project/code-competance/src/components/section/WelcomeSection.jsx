@@ -1,12 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigationUtils } from "../hook/navigationUtils";
 
 const WelcomeSection = () => {
-  const navigate = useNavigate();
-
-  const handleGetStartedClick = () => {
-    navigate("/about");
-  };
+  const { navigateTo } = useNavigationUtils();
 
   return (
     <section
@@ -24,7 +20,7 @@ const WelcomeSection = () => {
       {/* Button */}
       <div>
         <button
-          onClick={handleGetStartedClick}
+          onClick={() => navigateTo("/about")}
           className="bg-white-background inline-flex items-center justify-center px-8 py-4 border-2 border-black rounded-full text-black font-semibold transition-all duration-300 ease-in-out hover:bg-black hover:text-white"
         >
           GET STARTED

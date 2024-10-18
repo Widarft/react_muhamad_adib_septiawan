@@ -1,12 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useNavigationUtils } from "../hook/navigationUtils";
 
 const AboutUsHeroSection = () => {
-  const navigate = useNavigate();
+  const { navigateTo } = useNavigationUtils();
 
-  const handleBackHomeClick = () => {
-    navigate("/");
-  };
   return (
     <section
       className="flex items-center justify-between px-32 py-60 bg-white-background"
@@ -21,7 +19,7 @@ const AboutUsHeroSection = () => {
       {/* Right Side */}
       <div>
         <button
-          onClick={handleBackHomeClick}
+          onClick={() => navigateTo("/")}
           className="bg-white-background inline-flex items-center justify-center px-8 py-4 border-2 border-black rounded-full text-black font-semibold transition-all duration-300 ease-in-out hover:bg-black hover:text-white"
         >
           BACK HOME

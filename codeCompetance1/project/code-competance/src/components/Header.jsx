@@ -1,12 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigationUtils } from "./hook/navigationUtils";
 
 const Header = () => {
-  const navigate = useNavigate();
-
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
+  const { navigateTo } = useNavigationUtils();
 
   return (
     <header className="bg-white-background py-4 px-8 shadow-md">
@@ -17,19 +13,19 @@ const Header = () => {
         {/* Navigation */}
         <nav className="flex space-x-0 border-2 border-black rounded-full">
           <button
-            onClick={() => handleNavigation("/")}
+            onClick={() => navigateTo("/")}
             className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             HOME
           </button>
           <button
-            onClick={() => handleNavigation("/contact")}
+            onClick={() => navigateTo("/contact")}
             className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             CONTACT
           </button>
           <button
-            onClick={() => handleNavigation("/about")}
+            onClick={() => navigateTo("/about")}
             className="px-4 py-2 hover:border-2 hover:border-black hover:rounded-full hover:bg-black hover:text-white "
           >
             ABOUT
