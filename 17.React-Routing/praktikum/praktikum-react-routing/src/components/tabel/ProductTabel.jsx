@@ -31,7 +31,10 @@ const ProductTable = ({ products, handleDelete, handleEdit }) => {
             <tr key={product.id}>
               <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
               <td className="border border-gray-300 px-4 py-2">
-                <Link to={`/product/${product.id.toString()}`}>
+                <Link
+                  className="hover:text-blue-600"
+                  to={`/product/${product.id.toString()}`}
+                >
                   {product.productName}
                 </Link>
               </td>

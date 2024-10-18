@@ -4,11 +4,16 @@ import LandingPage from "./pages/LandingPage";
 import CreateProduct from "./pages/CreateProduct.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import PrivateRoute from "./hook/PrivateRoute.jsx";
 
 function App() {
   const [products, setProducts] = useState(() => {
     const savedProducts = localStorage.getItem("products");
     return savedProducts ? JSON.parse(savedProducts) : [];
+  });
+
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
   });
 
   useEffect(() => {
@@ -32,18 +37,25 @@ function App() {
         <Route
           path="/createProduct"
           element={
-            <CreateProduct
-              addProduct={addProduct}
-              products={products}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <CreateProduct
+                addProduct={addProduct}
+                products={products}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </PrivateRoute>
           }
         />
         <Route
           path="/product/:id"
-          element={<ProductDetail products={products} />}
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <ProductDetail products={products} />
+            </PrivateRoute>
+          }
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
