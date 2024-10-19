@@ -10,7 +10,7 @@ Dalam implementasinya react routing menggunakan parameter URL untuk menetapkan n
 
 Dalam React terdapat beberapa hook yang dapat digunakan.
 
-1. useHistory, digunakan untuk memberikan akses pada instance riwayat yang digunakan untuk navigasi.
-2. useLocation, digunakan untuk mengakses informasi mengenai lokasi atau URL yang sedang diakses oleh user di aplikasi.
-3. useParams, digunakan untuk mengembalikan objek pasangan kunci/nilai parameter.
-4. useRouteMatch, digunakan untuk mencocokan url untuk mendapatkan akses ke data kecocokan tanpa benar-benar merender
+1. `useHistory`, digunakan untuk memberikan akses pada instance riwayat yang digunakan untuk navigasi.
+2. `useLocation`, digunakan untuk mengakses informasi mengenai lokasi atau URL yang sedang diakses oleh user di aplikasi.
+3. `useParams`, digunakan untuk mengembalikan objek pasangan kunci/nilai parameter.
+4. `useRouteMatch`, digunakan untuk mencocokan url untuk mendapatkan akses ke data kecocokan tanpa benar-benar merender
