@@ -10,6 +10,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
   const [price, setPrice] = useState("");
   const [error, setError] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [productImage, setProductImage] = useState(null);
 
   const productNameRef = useRef(null);
   const productCategoryRef = useRef(null);
@@ -20,18 +21,20 @@ const ProductForm = ({ addProduct, editProduct }) => {
 
   const handleProductNameChange = (e) => {
     const value = e.target.value;
+    const regex = /^[a-zA-Z0-9\s]*$/;
     setProductName(value);
 
-    if (value.length > 25) {
-      alert("Last Name must not exceed 25 characters.");
+    if (!regex.test(value)) {
       setError((prev) => ({
         ...prev,
-        productName: "Last Name must not exceed 25 characters.",
+        productName:
+          "Product Name should contain only letters, numbers, and spaces.",
       }));
-    } else if (value.length > 10) {
+    } else if (value.length > 25) {
+      alert("Product Name must not exceed 25 characters.");
       setError((prev) => ({
         ...prev,
-        productName: "Product Name is too long (max 10 characters).",
+        productName: "Product Name must not exceed 25 characters.",
       }));
     } else {
       setError((prev) => ({ ...prev, productName: "" }));
@@ -40,28 +43,78 @@ const ProductForm = ({ addProduct, editProduct }) => {
 
   const handleCategoryChange = (e) => {
     const value = e.target.value;
+    const regex = /^(personal-computer|laptop|handphone|tablet|camera)$/;
     setProductCategory(value);
-    if (value) {
+
+    if (!regex.test(value)) {
+      setError((prev) => ({
+        ...prev,
+        productCategory: "Please select a valid product category.",
+      }));
+    } else {
       setError((prev) => ({ ...prev, productCategory: "" }));
+    }
+  };
+
+  const handleFreshnessChange = (e) => {
+    const value = e.target.value;
+    const regex = /^(brandNew|secondHand|refurbished)$/;
+    setProductFreshness(value);
+
+    if (!regex.test(value)) {
+      setError((prev) => ({
+        ...prev,
+        productFreshness: "Please select a valid product freshness option.",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, productFreshness: "" }));
     }
   };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFileName(selectedFile ? selectedFile.name : "No file chosen");
-    setError((prev) => ({ ...prev, productImage: "" }));
+    if (selectedFile && selectedFile.type.match(/image\/(jpeg|jpg|png)$/)) {
+      setProductImage(selectedFile);
+      setFileName(selectedFile.name);
+      setError((prev) => ({ ...prev, productImage: "" }));
+    } else {
+      setFileName("No file chosen");
+      setError((prev) => ({
+        ...prev,
+        productImage: "Please upload a valid image file (jpg, jpeg, png).",
+      }));
+    }
   };
 
   const handleDescriptionChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
+    const regex = /^.{10,}$/;
+
+    if (!regex.test(value)) {
+      setError((prev) => ({
+        ...prev,
+        description: "Description must be at least 10 characters long.",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, description: "" }));
+    }
+
     setDescription(value);
-    setError((prev) => ({ ...prev, description: "" }));
   };
 
   const handlePriceChange = (e) => {
     const value = e.target.value;
+    const regex = /^[1-9]\d*$/;
     setPrice(value);
-    setError((prev) => ({ ...prev, price: "" }));
+
+    if (!regex.test(value)) {
+      setError((prev) => ({
+        ...prev,
+        price: "Please enter a valid price (must be a positive number).",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, price: "" }));
+    }
   };
 
   useEffect(() => {
@@ -71,6 +124,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
       setProductFreshness(editProduct.productFreshness);
       setDescription(editProduct.description || "");
       setPrice(editProduct.price);
+      setFileName(editProduct.productImage);
     } else {
       setProductName("");
       setProductCategory("");
@@ -78,6 +132,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
       setDescription("");
       setPrice("");
       setFileName("No file chosen");
+      setProductImage(null);
     }
   }, [editProduct]);
 
@@ -124,6 +179,12 @@ const ProductForm = ({ addProduct, editProduct }) => {
       descriptionRef.current.focus();
       alert("Please provide additional description.");
       return;
+    } else if (description.length < 10) {
+      errors.description = "Description must be at least 10 characters long.";
+      setError(errors);
+      descriptionRef.current.focus();
+      alert("Description must be at least 10 characters long.");
+      return;
     }
 
     if (!price) {
@@ -137,6 +198,10 @@ const ProductForm = ({ addProduct, editProduct }) => {
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
+      let productImageURL = null;
+      if (productImage) {
+        productImageURL = URL.createObjectURL(productImage);
+      }
       const newProduct = {
         id: editProduct ? editProduct.id : uuidv4(),
         productName,
@@ -144,7 +209,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
         productFreshness,
         price,
         description,
-        productImage: fileName,
+        productImage: productImageURL,
       };
 
       console.log("Product Data Submitted:", newProduct);
@@ -152,17 +217,25 @@ const ProductForm = ({ addProduct, editProduct }) => {
       addProduct(newProduct);
       alert("Product created successfully!");
 
-      // Reset form
       setProductName("");
       setProductCategory("");
       setDescription("");
       setPrice("");
       setFileName("No file chosen");
       setProductFreshness("");
+      setProductImage(null);
       setError({});
       setIsSubmitted(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (productImage) {
+        URL.revokeObjectURL(productImage);
+      }
+    };
+  }, [productImage]);
 
   return (
     <form
@@ -279,7 +352,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
               type="radio"
               name="freshness"
               value="brandNew"
-              onChange={(e) => setProductFreshness(e.target.value)}
+              onChange={handleFreshnessChange}
               checked={productFreshness === "brandNew"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
@@ -292,7 +365,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
               type="radio"
               name="freshness"
               value="secondHand"
-              onChange={(e) => setProductFreshness(e.target.value)}
+              onChange={handleFreshnessChange}
               checked={productFreshness === "secondHand"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />
@@ -305,7 +378,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
               type="radio"
               name="freshness"
               value="refurbished"
-              onChange={(e) => setProductFreshness(e.target.value)}
+              onChange={handleFreshnessChange}
               checked={productFreshness === "refurbished"}
               className="form-radio focus:ring focus:ring-bs-blue focus:outline-none"
             />

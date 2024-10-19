@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProductTable = ({ products, handleDelete, handleEdit }) => {
   return (
-    <table className="min-w-full border-collapse border border-gray-200">
+    <table className="max-w-5xl mx-auto border-collapse border border-gray-200">
       <thead>
         <tr>
           <th className="bg-gray-400 border border-gray-300 px-4 py-2">No</th>
@@ -18,6 +18,12 @@ const ProductTable = ({ products, handleDelete, handleEdit }) => {
           </th>
           <th className="bg-gray-400 border border-gray-300 px-4 py-2">
             Price
+          </th>
+          <th className="bg-gray-400 border border-gray-300 px-4 py-2">
+            Description
+          </th>
+          <th className="bg-gray-400 border border-gray-300 px-4 py-2">
+            Photo
           </th>
           <th className="bg-gray-400 border border-gray-300 px-4 py-2">
             Action
@@ -46,6 +52,16 @@ const ProductTable = ({ products, handleDelete, handleEdit }) => {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {"$ " + product.price}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {product.description}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {product.productImage ? (
+                  <img src={product.productImage} alt="Product" width="100" />
+                ) : (
+                  <span>No image uploaded</span>
+                )}
               </td>
               <td>
                 <div className="flex justify-center">

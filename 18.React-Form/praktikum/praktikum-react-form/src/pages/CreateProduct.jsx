@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { article } from "../data/article";
 import { v4 as uuidv4 } from "uuid";
-import Header from "../components/Header";
-import ProductForm from "../components/ProductForm";
+import ProductForm from "../components/form/ProductForm";
 import RandomNumberButton from "../components/button/RandomNumberButton";
 import ArticleCreateProduct from "../components/article/ArticleCreateProduct";
 import ProductTable from "../components/tabel/ProductTabel";
@@ -88,7 +87,6 @@ const CreateProduct = () => {
 
   return (
     <>
-      <Header />
       <div className="flex justify-end mt-4 mr-4">
         <button
           onClick={changeLanguage}
@@ -98,23 +96,25 @@ const CreateProduct = () => {
         </button>
       </div>
       <main className="main font-roboto container mx-auto">
-        <div className="max-w-2xl mx-auto bg-white pt-12 rounded-lg mt-12">
-          <div className="flex justify-center mb-6">
-            <div>
-              <img
-                src="./src/assets/img/bootstrap-logo.svg.png"
-                alt="Bootstrap logo"
-              />
+        <div className="mx-auto bg-white pt-12 rounded-lg mt-12">
+          <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto flex justify-center mb-6">
+              <div>
+                <img
+                  src="./src/assets/img/bootstrap-logo.svg.png"
+                  alt="Bootstrap logo"
+                />
+              </div>
             </div>
+            <h2 className="font-bold text-3xl text-center mb-6">
+              {article.title[language]}
+            </h2>
+            <ArticleCreateProduct language={language} />
+            <ProductForm
+              addProduct={handleAddProduct}
+              editProduct={editProduct}
+            />
           </div>
-          <h2 className="font-bold text-3xl text-center mb-6">
-            {article.title[language]}
-          </h2>
-          <ArticleCreateProduct language={language} />
-          <ProductForm
-            addProduct={handleAddProduct}
-            editProduct={editProduct}
-          />
           <ProductTable
             products={products}
             handleDelete={handleDelete}

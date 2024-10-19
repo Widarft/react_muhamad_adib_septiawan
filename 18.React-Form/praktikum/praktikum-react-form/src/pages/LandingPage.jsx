@@ -7,7 +7,6 @@ import NewsLetterSection from "../components/section/NewsLetterSection";
 const LandingPage = () => {
   return (
     <div>
-      <Header />
       <HeroSection />
       <NewsLetterSection />
       <Footer />
