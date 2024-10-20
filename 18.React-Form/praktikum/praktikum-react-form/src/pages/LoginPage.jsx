@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNavigationUtils } from "../hook/navigationUtils";
 
@@ -9,6 +9,13 @@ const LoginForm = ({ setIsAuthenticated }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const { navigateTo } = useNavigationUtils();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -26,22 +33,32 @@ const LoginForm = ({ setIsAuthenticated }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+
     if (validateForm()) {
-      setIsAuthenticated(true);
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
+      const userData = JSON.parse(localStorage.getItem("userData"));
+
+      if (
+        userData &&
+        userData.email === email &&
+        userData.password === password
+      ) {
+        setIsAuthenticated(true);
+        localStorage.setItem("isLoggedIn", "true");
+        navigate("/");
+      } else {
+        setError({ form: "Email or password is incorrect." });
+      }
     }
   };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-10 rounded-lg shadow-lg w-[350px]">
-        <button>
+        <button onClick={() => navigateTo("/")}>
           <img
             src="./src/assets/img/home.png"
-            alt="Home Button"
+            alt="Home"
             className="w-8 h-8 mb-1"
-            onClick={() => navigateTo("/")}
           />
         </button>
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
@@ -92,6 +109,12 @@ const LoginForm = ({ setIsAuthenticated }) => {
               <p className="text-sm mt-1 text-red-500">{error.password}</p>
             )}
           </div>
+
+          {error.form && (
+            <p className="text-sm mt-1 text-red-500 text-center">
+              {error.form}
+            </p>
+          )}
 
           <button
             type="submit"

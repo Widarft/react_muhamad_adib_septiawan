@@ -158,6 +158,8 @@ const RegistrationForm = () => {
       setConfirmPassword("");
       setError({});
       setIsSubmitted(false);
+
+      navigateTo("/login");
     }
   };
 
