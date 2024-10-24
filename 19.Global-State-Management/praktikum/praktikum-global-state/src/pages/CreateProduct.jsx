@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { article } from "../data/article";
-import { v4 as uuidv4 } from "uuid";
 import ProductForm from "../components/form/ProductForm";
 import RandomNumberButton from "../components/button/RandomNumberButton";
 import ArticleCreateProduct from "../components/article/ArticleCreateProduct";
 import ProductTable from "../components/tabel/ProductTabel";
 import DeleteModal from "../components/modal/DeleteModal";
+import useProductStore from "../store/useProductStore";
 
 const CreateProduct = () => {
+  const products = useProductStore((state) => state.products);
+  const deleteProduct = useProductStore((state) => state.deleteProduct);
+  const updateProduct = useProductStore((state) => state.updateProduct);
+  const [editProduct, setEditProduct] = useState(null);
   const [language, setLanguage] = useState("en");
-  const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const [productNameToDelete, setProductNameToDelete] = useState("");
-  const [editProduct, setEditProduct] = useState(null);
 
   const changeLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === "en" ? "id" : "en"));
@@ -23,48 +25,38 @@ const CreateProduct = () => {
     alert("Welcome");
   }, []);
 
-  useEffect(() => {
-    const storedProducts = localStorage.getItem("products");
-    if (storedProducts) {
-      setProducts(JSON.parse(storedProducts));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (products.length > 0) {
-      localStorage.setItem("products", JSON.stringify(products));
-    }
-  }, [products]);
-
   const handleAddProduct = (product) => {
     if (editProduct) {
-      setProducts((prevProducts) =>
-        prevProducts.map((p) =>
-          p.id === editProduct.id ? { ...product, id: editProduct.id } : p
-        )
-      );
+      const updatedProduct = {
+        ...product,
+        id: editProduct.id,
+      };
+      updateProduct(updatedProduct);
       setEditProduct(null);
     } else {
-      setProducts((prevProducts) => [
-        ...prevProducts,
-        { ...product, id: uuidv4() },
-      ]);
+      useProductStore.getState().addProduct(product);
+    }
+  };
+
+  const handleEdit = (id) => {
+    const productToEdit = products.find((product) => product.id === id);
+    if (productToEdit) {
+      setEditProduct(productToEdit);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handleDelete = (id) => {
     const productToDelete = products.find((product) => product.id === id);
     if (productToDelete) {
-      setProductNameToDelete(productToDelete.name);
+      setProductNameToDelete(productToDelete.productName);
     }
     setProductIdToDelete(id);
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
-    setProducts((prev) =>
-      prev.filter((product) => product.id !== productIdToDelete)
-    );
+    deleteProduct(productIdToDelete);
     setIsModalOpen(false);
     setProductNameToDelete("");
   };
@@ -72,17 +64,6 @@ const CreateProduct = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setProductNameToDelete("");
-  };
-
-  const handleEditProduct = (id) => {
-    const productToEdit = products.find((product) => product.id === id);
-    setEditProduct(productToEdit);
-  };
-
-  const handleDeleteProduct = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
   };
 
   return (
@@ -113,13 +94,13 @@ const CreateProduct = () => {
             <ProductForm
               addProduct={handleAddProduct}
               editProduct={editProduct}
+              setEditProduct={setEditProduct}
             />
           </div>
           <ProductTable
             products={products}
             handleDelete={handleDelete}
-            handleDeleteProduct={handleDeleteProduct}
-            handleEdit={handleEditProduct}
+            handleEdit={handleEdit}
           />
           <DeleteModal
             isOpen={isModalOpen}

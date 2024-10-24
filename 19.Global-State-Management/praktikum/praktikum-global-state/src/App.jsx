@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import CreateProduct from "./pages/CreateProduct.jsx";
@@ -10,11 +10,6 @@ import LoginPage from "./pages/LoginPage.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
 
 function App() {
-  const [products, setProducts] = useState(() => {
-    const savedProducts = localStorage.getItem("products");
-    return savedProducts ? JSON.parse(savedProducts) : [];
-  });
-
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
@@ -23,20 +18,6 @@ function App() {
     setIsAuthenticated(false);
     localStorage.removeItem("isLoggedIn");
   };
-
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
-  }, [products]);
-
-  const addProduct = (product) => {
-    setProducts([...products, product]);
-  };
-
-  const handleDelete = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
-  };
-
-  const handleEdit = (id) => {};
 
   return (
     <Router>
@@ -54,12 +35,7 @@ function App() {
           path="/createProduct"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <CreateProduct
-                addProduct={addProduct}
-                products={products}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-              />
+              <CreateProduct />
             </PrivateRoute>
           }
         />
@@ -67,7 +43,7 @@ function App() {
           path="/product/:id"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <ProductDetail products={products} />
+              <ProductDetail />
             </PrivateRoute>
           }
         />

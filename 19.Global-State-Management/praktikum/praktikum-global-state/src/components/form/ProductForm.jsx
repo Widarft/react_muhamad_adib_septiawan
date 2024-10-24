@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useProductStore from "../../store/useProductStore";
 
-const ProductForm = ({ addProduct, editProduct }) => {
+const ProductForm = ({ editProduct, setEditProduct }) => {
+  const addProduct = useProductStore((state) => state.addProduct);
+  const updateProduct = useProductStore((state) => state.updateProduct);
   const [fileName, setFileName] = useState("No file chosen");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
@@ -11,6 +14,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
   const [error, setError] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [productImage, setProductImage] = useState(null);
+  const [productImageURL, setProductImageURL] = useState(null);
 
   const productNameRef = useRef(null);
   const productCategoryRef = useRef(null);
@@ -72,18 +76,26 @@ const ProductForm = ({ addProduct, editProduct }) => {
   };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type.match(/image\/(jpeg|jpg|png)$/)) {
-      setProductImage(selectedFile);
-      setFileName(selectedFile.name);
-      setError((prev) => ({ ...prev, productImage: "" }));
-    } else {
+    const file = e.target.files[0];
+
+    if (!file) {
       setFileName("No file chosen");
-      setError((prev) => ({
-        ...prev,
-        productImage: "Please upload a valid image file (jpg, jpeg, png).",
-      }));
+      setProductImage(null);
+      setProductImageURL(null);
+      return;
     }
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload a valid image file.");
+      setFileName("No file chosen");
+      setProductImage(null);
+      setProductImageURL(null);
+      return;
+    }
+
+    setFileName(file.name);
+    setProductImage(file);
+    setProductImageURL(URL.createObjectURL(file));
   };
 
   const handleDescriptionChange = (e) => {
@@ -119,12 +131,20 @@ const ProductForm = ({ addProduct, editProduct }) => {
 
   useEffect(() => {
     if (editProduct) {
-      setProductName(editProduct.productName);
-      setProductCategory(editProduct.productCategory);
-      setProductFreshness(editProduct.productFreshness);
+      setProductName(editProduct.productName || "");
+      setProductCategory(editProduct.productCategory || "");
+      setProductFreshness(editProduct.productFreshness || "");
       setDescription(editProduct.description || "");
-      setPrice(editProduct.price);
-      setFileName(editProduct.productImage);
+      setPrice(editProduct.price || "");
+      if (editProduct.productImage) {
+        setFileName(
+          editProduct.productImage.split("/").pop() || "Existing image"
+        );
+        setProductImageURL(editProduct.productImage);
+      } else {
+        setFileName("No file chosen");
+        setProductImageURL(null);
+      }
     } else {
       setProductName("");
       setProductCategory("");
@@ -132,9 +152,17 @@ const ProductForm = ({ addProduct, editProduct }) => {
       setDescription("");
       setPrice("");
       setFileName("No file chosen");
-      setProductImage(null);
+      setProductImageURL(null);
     }
   }, [editProduct]);
+
+  useEffect(() => {
+    return () => {
+      if (productImageURL && productImage) {
+        URL.revokeObjectURL(productImageURL);
+      }
+    };
+  }, [productImageURL, productImage]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -198,24 +226,32 @@ const ProductForm = ({ addProduct, editProduct }) => {
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
-      let productImageURL = null;
-      if (productImage) {
-        productImageURL = URL.createObjectURL(productImage);
-      }
+      let productImageURL = productImage
+        ? URL.createObjectURL(productImage)
+        : editProduct?.productImage || null;
+
       const newProduct = {
-        id: editProduct ? editProduct.id : uuidv4(),
+        id: editProduct?.id || uuidv4(),
         productName,
         productCategory,
         productFreshness,
         price,
         description,
-        productImage: productImageURL,
+        productImage: productImage
+          ? productImageURL
+          : editProduct?.productImage || null,
       };
 
-      console.log("Product Data Submitted:", newProduct);
+      console.log("Product yang disubmit:", newProduct);
 
-      addProduct(newProduct);
-      alert("Product created successfully!");
+      if (editProduct) {
+        updateProduct(newProduct);
+        alert("Product updated successfully!");
+        setEditProduct(null);
+      } else {
+        addProduct(newProduct);
+        alert("Product created successfully!");
+      }
 
       setProductName("");
       setProductCategory("");
@@ -224,18 +260,11 @@ const ProductForm = ({ addProduct, editProduct }) => {
       setFileName("No file chosen");
       setProductFreshness("");
       setProductImage(null);
+      setProductImageURL(null);
       setError({});
       setIsSubmitted(false);
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (productImage) {
-        URL.revokeObjectURL(productImage);
-      }
-    };
-  }, [productImage]);
 
   return (
     <form
@@ -257,7 +286,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
           type="text"
           id="productName"
           name="productName"
-          value={productName}
+          value={productName || ""}
           onChange={handleProductNameChange}
           ref={productNameRef}
           placeholder="Enter product name"
@@ -283,7 +312,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
         <select
           id="productCategory"
           name="productCategory"
-          value={productCategory}
+          value={productCategory || ""}
           onChange={handleCategoryChange}
           ref={productCategoryRef}
           className={`w-[224px] px-3 py-2 mb-1 border rounded-md focus:ring focus:ring-bs-blue focus:outline-none ${
@@ -336,6 +365,15 @@ const ProductForm = ({ addProduct, editProduct }) => {
             </span>
           </div>
         </div>
+        {productImageURL && (
+          <div className="mt-2">
+            <img
+              src={productImageURL}
+              alt="Product preview"
+              className="w-24 h-24 object-cover"
+            />
+          </div>
+        )}
         {error.productImage && (
           <p className="text-sm mt-1 text-red-500">{error.productImage}</p>
         )}
@@ -398,7 +436,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
         <textarea
           id="description"
           name="description"
-          value={description}
+          value={description || ""}
           onChange={handleDescriptionChange}
           ref={descriptionRef}
           rows="6"
@@ -426,7 +464,7 @@ const ProductForm = ({ addProduct, editProduct }) => {
             type="number"
             id="price"
             name="price"
-            value={price}
+            value={price || ""}
             onChange={handlePriceChange}
             ref={priceRef}
             min="1"

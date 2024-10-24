@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigationUtils } from "../hook/navigationUtils";
+import useProductStore from "../store/useProductStore";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { navigateTo } = useNavigationUtils();
+  const products = useProductStore((state) => state.products);
+  const product = products.find((p) => p.id.toString() === id);
 
   useEffect(() => {
-    const fetchProduct = () => {
-      const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-      const foundProduct = storedProducts.find((p) => p.id.toString() === id);
-      setProduct(foundProduct);
+    if (product) {
       setLoading(false);
-    };
-
-    fetchProduct();
-  }, [id]);
+    }
+  }, [product]);
 
   const handleBack = () => {
     navigateTo("/createProduct");

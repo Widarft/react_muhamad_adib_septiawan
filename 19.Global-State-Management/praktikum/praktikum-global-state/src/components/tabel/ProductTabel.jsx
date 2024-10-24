@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useProductStore from "../../store/useProductStore";
 
-const ProductTable = ({ products, handleDelete, handleEdit }) => {
+const ProductTable = ({ handleDelete, handleEdit }) => {
+  const products = useProductStore((state) => state.products);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
+
   return (
-    <table className="max-w-5xl mx-auto border-collapse border border-gray-200">
+    <table className="max-w-7xl mx-auto border-collapse border border-gray-200">
       <thead>
         <tr>
           <th className="bg-gray-400 border border-gray-300 px-4 py-2">No</th>
@@ -32,48 +39,60 @@ const ProductTable = ({ products, handleDelete, handleEdit }) => {
       </thead>
       <tbody>
         {products.map((product, index) => {
-          console.log("Linking to product ID:", product.id);
+          const {
+            id,
+            productName,
+            productCategory,
+            productFreshness,
+            price,
+            description,
+            productImage,
+          } = product;
           return (
             <tr key={product.id}>
               <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
               <td className="border border-gray-300 px-4 py-2">
                 <Link
                   className="hover:text-blue-600"
-                  to={`/product/${product.id.toString()}`}
+                  to={`/product/${id.toString()}`}
                 >
-                  {product.productName}
+                  {productName}
                 </Link>
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {product.productCategory}
+                {productCategory}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {product.productFreshness}
+                {productFreshness}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {"$ " + product.price}
+                {"$ " + price}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {product.description}
+                {description}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {product.productImage ? (
-                  <img src={product.productImage} alt="Product" width="100" />
+                {productImage ? (
+                  <img
+                    src={productImage}
+                    alt={productName}
+                    className="w-24 h-24 object-cover"
+                  />
                 ) : (
                   <span>No image uploaded</span>
                 )}
               </td>
               <td>
-                <div className="flex justify-center">
+                <div className="flex justify-center space-x-2">
                   <button
                     className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded"
-                    onClick={() => handleEdit(product.id)}
+                    onClick={() => handleEdit(id)}
                   >
                     Edit
                   </button>
                   <button
                     className="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded"
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => handleDelete(id)}
                   >
                     Delete
                   </button>
