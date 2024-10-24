@@ -7,7 +7,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, productName }) => {
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-md">
         <p>
-          Apakah kalian ingin menghapus produk <strong>{productName}</strong>?
+          Apakah anda ingin menghapus produk <strong>{productName}</strong>?
         </p>
         <div className="flex justify-end mt-4">
           <button
