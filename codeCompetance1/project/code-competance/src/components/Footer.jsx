@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Logo */}
           <div className="flex flex-col items-center text-center md:text-left md:col-span-1">
             <img
-              src="./src/assets/image/A.png"
+              src="/assets/image/A.png"
               alt="Logo A"
               className="w-[85px] h-[85px] mb-2 filter invert"
             />
@@ -51,7 +51,7 @@ const Footer = () => {
                 className="text-white hover:text-gray-400"
               >
                 <img
-                  src="./src/assets/image/Platform=LinkedIn, Color=Negative.png"
+                  src="/assets/image/Platform=LinkedIn, Color=Negative.png"
                   alt="Linked Icon"
                   className="w-5 h-5"
                 />
@@ -62,7 +62,7 @@ const Footer = () => {
                 className="text-white hover:text-gray-400"
               >
                 <img
-                  src="./src/assets/image/Platform=Instagram, Color=Negative.png"
+                  src="/assets/image/Platform=Instagram, Color=Negative.png"
                   alt="Instagram Icon"
                   className="w-5 h-5"
                 />
@@ -73,7 +73,7 @@ const Footer = () => {
                 className="text-white hover:text-gray-400"
               >
                 <img
-                  src="./src/assets/image/Platform=YouTube, Color=Negative.png"
+                  src="/assets/image/Platform=YouTube, Color=Negative.png"
                   alt="YouTube Icon"
                   className="w-5 h-5"
                 />
@@ -84,7 +84,7 @@ const Footer = () => {
                 className="text-white hover:text-gray-400"
               >
                 <img
-                  src="./src/assets/image/Platform=Github, Color=Negative.png"
+                  src="/assets/image/Platform=Github, Color=Negative.png"
                   alt="Git Icon"
                   className="w-5 h-5"
                 />
@@ -95,7 +95,7 @@ const Footer = () => {
                 className="w-5 h-5"
               >
                 <img
-                  src="./src/assets/image/Platform=WhatsApp, Color=Negative.png"
+                  src="/assets/image/Platform=WhatsApp, Color=Negative.png"
                   alt="WhatsApp Icon"
                 />
               </a>

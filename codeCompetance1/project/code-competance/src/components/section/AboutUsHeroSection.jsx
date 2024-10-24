@@ -8,7 +8,7 @@ const AboutUsHeroSection = () => {
   return (
     <section
       className="flex items-center justify-between px-32 py-60 bg-white-background"
-      style={{ backgroundImage: "url('./src/assets/image/grid.png')" }}
+      style={{ backgroundImage: "url('/assets/image/grid.png')" }}
     >
       {/* Left Side */}
       <div className="space-y-4">

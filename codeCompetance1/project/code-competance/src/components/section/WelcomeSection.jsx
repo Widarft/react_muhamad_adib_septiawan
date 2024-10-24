@@ -7,7 +7,7 @@ const WelcomeSection = () => {
   return (
     <section
       className="flex items-center justify-between px-32 py-48 bg-white-background"
-      style={{ backgroundImage: "url('./src/assets/image/grid.png')" }}
+      style={{ backgroundImage: "url('/assets/image/grid.png')" }}
     >
       {/* Welcome */}
       <div className="space-y-4">

@@ -14,7 +14,7 @@ const ProfileSection = () => {
         </div>
         <div className="py-8">
           <img
-            src="./src/assets/image/personal.png"
+            src="/assets/image/personal.png"
             alt="Personal"
             className="w-full h-auto rounded-lg object-cover"
           />
@@ -23,7 +23,7 @@ const ProfileSection = () => {
         {/* Pendidikan Section */}
         <div className="py-8">
           <img
-            src="./src/assets/image/pendidikan.png"
+            src="/assets/image/pendidikan.png"
             alt="Pendidikan"
             className="w-full h-auto rounded-lg object-cover"
           />
@@ -48,7 +48,7 @@ const ProfileSection = () => {
         </div>
         <div className="py-8">
           <img
-            src="./src/assets/image/pengalaman.png"
+            src="/assets/image/pengalaman.png"
             alt="Pengalaman Developer"
             className="w-full h-auto rounded-lg object-cover"
           />
@@ -57,7 +57,7 @@ const ProfileSection = () => {
         {/* Hobi Section */}
         <div className="py-8">
           <img
-            src="./src/assets/image/hobi.png"
+            src="/assets/image/hobi.png"
             alt="Hobi"
             className="w-full h-auto rounded-lg object-cover"
           />

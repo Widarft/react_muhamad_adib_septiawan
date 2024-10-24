@@ -6,7 +6,7 @@ const AboutUsSection = () => {
     <div className="flex justify-center items-center bg-white-background">
       <div
         className="relative w-full max-w-[1325px] p-16 rounded-3xl"
-        style={{ backgroundImage: "url('./src/assets/image/grid.png')" }}
+        style={{ backgroundImage: "url('/assets/image/grid.png')" }}
       >
         <div className="absolute inset-0 bg-black opacity-90 rounded-3xl"></div>
         <div className="relative z-10 text-white grid grid-cols-2 gap-4">
