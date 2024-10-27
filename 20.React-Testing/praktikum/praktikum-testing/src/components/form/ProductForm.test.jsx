@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ProductForm from "../ProductForm";
+import ProductForm from "./ProductForm";
 import { vi } from "vitest";
 
 const mockAddProduct = vi.fn();
