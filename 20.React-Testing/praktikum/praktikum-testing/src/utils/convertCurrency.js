@@ -18,5 +18,4 @@ export async function convertCurrency(amount, fromCurrency, toCurrency) {
   }
 }
 
-// Contoh Penggunaan
 convertCurrency(100, "USD", "IDR");
