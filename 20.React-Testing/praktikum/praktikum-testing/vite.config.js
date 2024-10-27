@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: "jsdom", // Menyediakan DOM untuk pengujian React
-    setupFiles: "./src/setupTests.js", // Setup tambahan jika diperlukan
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.js",
     includeSource: ["src/**/*.{js,jsx}"],
   },
 });
