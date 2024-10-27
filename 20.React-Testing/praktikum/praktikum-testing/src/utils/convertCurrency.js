@@ -1,4 +1,4 @@
-async function convertCurrency(amount, fromCurrency, toCurrency) {
+export async function convertCurrency(amount, fromCurrency, toCurrency) {
   try {
     const response = await fetch(
       `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
