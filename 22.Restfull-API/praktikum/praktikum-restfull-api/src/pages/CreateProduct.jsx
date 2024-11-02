@@ -9,6 +9,7 @@ import useProductStore from "../store/useProductStore";
 
 const CreateProduct = () => {
   const products = useProductStore((state) => state.products);
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
   const deleteProduct = useProductStore((state) => state.deleteProduct);
   const updateProduct = useProductStore((state) => state.updateProduct);
   const [editProduct, setEditProduct] = useState(null);
@@ -23,18 +24,25 @@ const CreateProduct = () => {
 
   useEffect(() => {
     alert("Welcome");
-  }, []);
+    fetchProducts();
+  }, [fetchProducts]);
 
-  const handleAddProduct = (product) => {
-    if (editProduct) {
-      const updatedProduct = {
-        ...product,
-        id: editProduct.id,
-      };
-      updateProduct(updatedProduct);
-      setEditProduct(null);
-    } else {
-      useProductStore.getState().addProduct(product);
+  const handleAddProduct = async (product) => {
+    try {
+      if (editProduct) {
+        const updatedProduct = {
+          ...product,
+          id: editProduct.id,
+        };
+        await updateProduct(updatedProduct);
+        setEditProduct(null);
+        alert("Product updated successfully!");
+      } else {
+        await useProductStore.getState().addProduct(product);
+        alert("Product added successfully!");
+      }
+    } catch (error) {
+      alert("Failed to add/update product. Please try again.");
     }
   };
 
@@ -55,10 +63,11 @@ const CreateProduct = () => {
     setIsModalOpen(true);
   };
 
-  const confirmDelete = () => {
-    deleteProduct(productIdToDelete);
+  const confirmDelete = async () => {
+    await deleteProduct(productIdToDelete);
     setIsModalOpen(false);
     setProductNameToDelete("");
+    alert("Product deleted successfully!");
   };
 
   const closeModal = () => {

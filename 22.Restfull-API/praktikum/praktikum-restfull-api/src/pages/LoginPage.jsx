@@ -44,6 +44,7 @@ const LoginForm = ({ setIsAuthenticated }) => {
       ) {
         setIsAuthenticated(true);
         localStorage.setItem("isLoggedIn", "true");
+        alert("Login successfully!");
         navigate("/");
       } else {
         setError({ form: "Email or password is incorrect." });
