@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Web Page</title>
+    <style>
+      /* Warna cerah yang mengonsumsi lebih banyak energi pada layar */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #666b63; /* Adib: Warna putih saya ubah menjadi lebih gelap*/
+        color: #9eae9f;
+      }
+      header,
+      footer {
+        background-color: #021d02; /* Warna cerah (cyan) | Adib: Warna saya ubah menjadi hijau gelap agar selain gelap nuansa alamnya juga masih terasa*/
+        padding: 20px;
+        text-align: center;
+      }
+      main {
+        padding: 20px;
+        background: #093116; /* Warna cerah (kuning) | Adib: warna saya ganti dengan hijau yang lebih gelap*/
+      }
+      .content {
+        margin-bottom: 20px;
+      }
+      .link-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .link-list li {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to My Green Web Page</h1>
+    </header>
+
+    <!-- Video beresolusi tinggi sebagai background yang menguras energi -->
+    <!-- Adib: Saya ganti dengan gambar statis agar tidak ada transfer data yang besar-->
+    <div class="background-image">
+      <img src="forest.png" alt="Background Image" width="100%" height="auto" />
+    </div>
+
+    <main>
+      <section class="content">
+        <h2>About Me</h2>
+        <!-- Gambar resolusi tinggi dengan ukuran besar tanpa optimasi -->
+        <!-- Adib: Gambar resolusi rendah dengan lazy loading sehingga gambar akan di load hanya jika user melakukan scroll kebawah  -->
+        <img
+          src="https://placehold.co/600x400"
+          alt="Optimized Image"
+          loading="lazy"
+        />
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+          vitae velit ex.
+        </p>
+      </section>
+      <section class="content">
+        <h2>My Interests</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+          vitae velit ex.
+        </p>
+        <ul class="link-list">
+          <li><a href="#">Interest 1</a></li>
+          <li><a href="#">Interest 2</a></li>
+          <li><a href="#">Interest 3</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 My Non-Green Web Page</p>
+    </footer>
+  </body>
+</html>
