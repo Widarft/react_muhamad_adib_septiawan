@@ -31,7 +31,7 @@ const Header = () => {
 
           <button
             onClick={() => navigateTo("/createProduct")}
-            className="px-4 py-2 bg-dark-orange text-black rounded-md hover:bg-light-orange focus:outline-none"
+            className="px-6 py-3 bg-dark-orange text-main-black font-medium rounded-md hover:bg-light-orange"
           >
             ORDER NOW
           </button>
