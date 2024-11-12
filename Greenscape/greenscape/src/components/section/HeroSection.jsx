@@ -6,7 +6,7 @@ const HeroSection = () => {
 
   return (
     <div>
-      <section className="w-full h-[760px] bg-main-green text-white px-8 pl-[81px] pr-[0px] flex flex-col lg:flex-row items-center justify-between gap-y-8 lg:gap-x-6">
+      <section className="w-full h-[760px] bg-main-green text-white px-4 lg:px-16 flex flex-col lg:flex-row items-center justify-between gap-y-8 lg:gap-x-8">
         {/* Text Content */}
         <div className="w-full lg:w-1/2 max-w-screen-md text-center lg:text-left px-4 lg:px-0">
           <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-bold text-light-green">
@@ -30,11 +30,11 @@ const HeroSection = () => {
         </div>
 
         {/* Image Content */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end px-4 lg:px-0">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start px-4 lg:px-8">
           <img
             src="/assets/img/hero-image.png"
             alt="Landscaping Image"
-            className="w-full max-w-xs md:max-w-md lg:max-w-lg h-auto rounded-lg"
+            className="w-3/4 md:w-2/3 lg:w-full max-w-xs md:max-w-md lg:max-w-lg h-auto rounded-lg"
           />
         </div>
       </section>
