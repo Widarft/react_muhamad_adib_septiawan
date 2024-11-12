@@ -6,17 +6,17 @@ const HeroSection = () => {
 
   return (
     <div>
-      <section className="h-[760px] w-full bg-main-green text-white px-8 pl-[81px] pr-[0px] flex flex-col lg:flex-row items-center justify-between gap-x-6">
+      <section className="h-auto w-full bg-main-green text-white px-6 py-12 flex flex-col lg:flex-row items-center justify-between gap-y-8 lg:gap-x-6">
         {/* Text Content */}
-        <div className="lg:w-1/2 max-w-screen-md">
-          <h2 className="text-4xl lg:text-5xl mb-4 font-bold text-light-green">
+        <div className="w-full lg:w-1/2 max-w-screen-md text-center lg:text-left">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-4 font-bold text-light-green">
             LET'S BUILD <br /> GREENER SPACES <br /> TOGETHER
           </h2>
-          <p className="text-base text-second-cream mb-8">
+          <p className="text-sm sm:text-base text-second-cream mb-6">
             WE BELIEVE IN CREATING LANDSCAPES THAT NOT ONLY ENHANCE YOUR
             PROPERTY BUT ALSO CONTRIBUTE TO A HEALTHIER PLANET.
           </p>
-          <p className="text-base text-second-cream mb-8">
+          <p className="text-sm sm:text-base text-second-cream mb-6">
             OUR ECO-CONSCIOUS LANDSCAPING SERVICES PRIORITIZE NATIVE PLANTS,
             SUSTAINABLE MATERIALS, AND INNOVATIVE GREEN SOLUTIONS THAT PROMOTE
             BIODIVERSITY.
@@ -30,11 +30,11 @@ const HeroSection = () => {
         </div>
 
         {/* Image Content */}
-        <div className="lg:w-1/2">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
           <img
             src="/assets/img/hero-image.png"
             alt="Landscaping Image"
-            className="w-full h-auto"
+            className="w-full max-w-xs sm:max-w-md lg:max-w-lg h-auto rounded-lg"
           />
         </div>
       </section>
