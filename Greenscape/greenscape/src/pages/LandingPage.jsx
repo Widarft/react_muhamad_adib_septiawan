@@ -12,6 +12,7 @@ const LandingPage = () => {
       <AboutUsSection />
       <OurServicesSection />
       <ContactUsSection />
+      <Footer />
     </div>
   );
 };
