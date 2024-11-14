@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.jsx";
-import CreateProduct from "./pages/CreateProduct.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import PrivateRoute from "./hook/PrivateRoute.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -11,7 +10,10 @@ import AiProductPage from "./pages/AiProductPage.jsx";
 import OrderFormPage from "./pages/OrderFormPage.jsx";
 import OrderTable from "./components/tabel/OrderTabel.jsx";
 import RestrictedPage from "./pages/RestrictedPage.jsx";
-import PortofolioCardSection from "./components/section/PortofolioCardSection.jsx";
+import PortfolioPage from "./pages/PortfolioPage.jsx";
+import PortfolioForm from "./components/form/PortfolioForm.jsx";
+import PortfolioDetail from "./pages/PortfolioDetailPage.jsx";
+import PortfolioTabel from "./components/tabel/PortfolioTabel.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -47,11 +49,10 @@ function App() {
           element={
             <PrivateRoute isAuthenticated={isAuthenticated && isAdmin}>
               <AdminLayout handleLogout={handleLogout}>
-                {" "}
-                {/* Menambahkan handleLogout sebagai props */}
                 <Routes>
                   <Route index element={<OrderTable />} />
-                  <Route path="products" element={<CreateProduct />} />
+                  <Route path="portfolioform" element={<PortfolioForm />} />
+                  <Route path="portfoliotable" element={<PortfolioTabel />} />
                 </Routes>
               </AdminLayout>
             </PrivateRoute>
@@ -70,7 +71,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/aiproductchat" element={<AiProductPage />} />
           <Route path="/inputorder" element={<OrderFormPage />} />
-          <Route path="/portofolio" element={<PortofolioCardSection />} />
+          <Route path="/portofolio" element={<PortfolioPage />} />
+          <Route path="/portfolio/:id" element={<PortfolioDetail />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation, Routes, Route } from "react-router-dom";
 import OrderTable from "../tabel/OrderTabel";
-import CreateProduct from "../../pages/CreateProduct";
+import PortfolioForm from "../form/PortfolioForm";
+import PortfolioTabel from "../tabel/PortfolioTabel";
 
 const AdminLayout = ({ handleLogout }) => {
   const location = useLocation();
@@ -24,37 +25,27 @@ const AdminLayout = ({ handleLogout }) => {
                   "/admin"
                 )}`}
               >
-                Pesanan
+                Table Order
               </Link>
             </li>
             <li>
               <Link
-                to="/admin/products"
+                to="/admin/portfolioform"
                 className={`flex items-center p-3 rounded-lg ${isActiveRoute(
-                  "/admin/products"
+                  "/admin/portfolioform"
                 )}`}
               >
-                Produk
+                Form Portfolio
               </Link>
             </li>
             <li>
               <Link
-                to="/admin/customers"
+                to="/admin/portfoliotable"
                 className={`flex items-center p-3 rounded-lg ${isActiveRoute(
-                  "/admin/customers"
+                  "/admin/portfoliotable"
                 )}`}
               >
-                Pelanggan
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/settings"
-                className={`flex items-center p-3 rounded-lg ${isActiveRoute(
-                  "/admin/settings"
-                )}`}
-              >
-                Pengaturan
+                Table Portfolio
               </Link>
             </li>
           </ul>
@@ -82,7 +73,8 @@ const AdminLayout = ({ handleLogout }) => {
         <main className="bg-white shadow-md rounded-lg p-6">
           <Routes>
             <Route path="/" element={<OrderTable />} />
-            <Route path="/products" element={<CreateProduct />} />
+            <Route path="/portfolioform" element={<PortfolioForm />} />
+            <Route path="/portfoliotable" element={<PortfolioTabel />} />
           </Routes>
         </main>
       </div>
