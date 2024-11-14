@@ -35,7 +35,7 @@ const Header = () => {
           </ul>
 
           <button
-            onClick={() => navigateTo("/createProduct")}
+            onClick={() => navigateTo("/inputorder")}
             className="px-6 py-3 bg-dark-orange text-main-black font-medium rounded-md hover:bg-light-orange"
           >
             ORDER NOW

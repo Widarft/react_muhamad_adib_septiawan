@@ -6,7 +6,7 @@ const HeroSection = () => {
 
   return (
     <div>
-      <section className="w-full h-[760px] bg-main-green text-white px-4 lg:px-16 flex flex-col lg:flex-row items-center justify-between gap-y-8 lg:gap-x-8">
+      <section className="w-full h-[760px] bg-main-green text-white px-4 lg:pl-16 lg:pr-0 flex flex-col lg:flex-row items-center justify-between gap-y-8 lg:gap-x-8">
         {/* Text Content */}
         <div className="w-full lg:w-1/2 max-w-screen-md text-center lg:text-left px-4 lg:px-0">
           <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-bold text-light-green">
@@ -22,7 +22,7 @@ const HeroSection = () => {
             BIODIVERSITY.
           </p>
           <button
-            onClick={() => navigateTo("/createProduct")}
+            onClick={() => navigateTo("/inputorder")}
             className="mt-4 px-6 py-3 bg-dark-orange text-main-black font-medium rounded-md hover:bg-light-orange"
           >
             ORDER NOW
@@ -30,7 +30,9 @@ const HeroSection = () => {
         </div>
 
         {/* Image Content */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start px-4 lg:px-8">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end px-4 lg:px-0">
+          {" "}
+          {/* Adjusted to lg:justify-end */}
           <img
             src="/assets/img/hero-image.png"
             alt="Landscaping Image"

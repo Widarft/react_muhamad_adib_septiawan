@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNavigationUtils } from "../hook/navigationUtils";
 
-const LoginForm = ({ setIsAuthenticated }) => {
+const LoginForm = ({ setIsAuthenticated, setIsAdmin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
@@ -12,8 +12,15 @@ const LoginForm = ({ setIsAuthenticated }) => {
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn) {
+    const isAdmin = localStorage.getItem("isAdmin");
+
+    if (isLoggedIn && isAdmin) {
       navigate("/");
+    } else if (isLoggedIn && !isAdmin) {
+      alert("You do not have permission to access this page.");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("isAdmin");
+      navigate("/restricted");
     }
   }, [navigate]);
 
@@ -35,17 +42,16 @@ const LoginForm = ({ setIsAuthenticated }) => {
     setIsSubmitted(true);
 
     if (validateForm()) {
-      const userData = JSON.parse(localStorage.getItem("userData"));
+      const adminEmail = "admin@example.com";
+      const adminPassword = "adminpassword";
 
-      if (
-        userData &&
-        userData.email === email &&
-        userData.password === password
-      ) {
+      if (email === adminEmail && password === adminPassword) {
         setIsAuthenticated(true);
+        setIsAdmin(true);
         localStorage.setItem("isLoggedIn", "true");
-        alert("Login successfully!");
-        navigate("/");
+        localStorage.setItem("isAdmin", "true");
+        alert("Login successful!");
+        navigate("/admin");
       } else {
         setError({ form: "Email or password is incorrect." });
       }
@@ -53,12 +59,9 @@ const LoginForm = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-blue">
       <div className="bg-white p-10 rounded-lg shadow-lg w-[350px]">
-        <button onClick={() => navigateTo("/")}>
-          <img src="/assets/img/home.png" alt="Home" className="w-8 h-8 mb-1" />
-        </button>
-        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Login Admin</h2>
         <form className="grid grid-cols-1 gap-y-6" onSubmit={handleSubmit}>
           <div className="col-span-1">
             <label htmlFor="email" className="block text-base font-medium mb-1">
@@ -96,7 +99,7 @@ const LoginForm = ({ setIsAuthenticated }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className={`w-full px-4 py-2 mb-1 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none ${
+              className={`w-full px-4 py-2 mb-1 border rounded-md focus:ring focus:ring-main-green focus:outline-none ${
                 error.password && isSubmitted
                   ? "border-red-500"
                   : "border-gray-300"
@@ -115,22 +118,10 @@ const LoginForm = ({ setIsAuthenticated }) => {
 
           <button
             type="submit"
-            className="px-4 py-2 mt-2 w-full bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600"
+            className="px-4 py-2 mt-2 w-full bg-main-green text-white font-medium rounded-md hover:bg-green-700"
           >
             Login
           </button>
-
-          <div className="text-center mt-4">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <span
-                className="text-blue-500 hover:underline cursor-pointer"
-                onClick={() => navigate("/registration")}
-              >
-                Register here
-              </span>
-            </p>
-          </div>
         </form>
       </div>
     </div>

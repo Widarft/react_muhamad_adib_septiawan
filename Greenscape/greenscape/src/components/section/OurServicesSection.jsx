@@ -99,7 +99,7 @@ const OurServicesSection = () => {
             </p>
             <button
               onClick={() => {
-                navigateTo("/createProduct");
+                navigateTo("/inputorder");
                 closeModal();
               }}
               className="w-full px-6 py-3 bg-dark-orange text-main-black font-medium rounded-md hover:bg-light-orange"

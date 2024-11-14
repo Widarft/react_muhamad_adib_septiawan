@@ -1,63 +1,76 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.jsx";
 import CreateProduct from "./pages/CreateProduct.jsx";
-import ProductDetail from "./pages/ProductDetail.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import PrivateRoute from "./hook/PrivateRoute.jsx";
-import RegistrationPage from "./pages/RegistrationPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
+import AdminLayout from "./components/layout/AdminLayout.jsx";
 import AiProductPage from "./pages/AiProductPage.jsx";
+import OrderFormPage from "./pages/OrderFormPage.jsx";
+import OrderTable from "./components/tabel/OrderTabel.jsx";
+import RestrictedPage from "./pages/RestrictedPage.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
+  const [isAdmin, setIsAdmin] = useState(() => {
+    return localStorage.getItem("isAdmin") === "true";
+  });
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setIsAdmin(false);
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isAdmin");
   };
 
   return (
     <Router>
-      <MainLayout
-        isAuthenticated={isAuthenticated}
-        handleLogout={handleLogout}
-      />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        {/* Admin Routes */}
         <Route
           path="/login"
-          element={<LoginPage setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route
-          path="/createProduct"
           element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <CreateProduct />
+            <LoginPage
+              setIsAuthenticated={setIsAuthenticated}
+              setIsAdmin={setIsAdmin}
+            />
+          }
+        />
+        <Route path="restricted" element={<RestrictedPage />} />
+        <Route
+          path="/admin/*"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated && isAdmin}>
+              <AdminLayout handleLogout={handleLogout}>
+                {" "}
+                {/* Menambahkan handleLogout sebagai props */}
+                <Routes>
+                  <Route index element={<OrderTable />} />
+                  <Route path="products" element={<CreateProduct />} />
+                </Routes>
+              </AdminLayout>
             </PrivateRoute>
           }
         />
+
+        {/* Public Routes */}
         <Route
-          path="/product/:id"
           element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <ProductDetail />
-            </PrivateRoute>
+            <MainLayout
+              isAuthenticated={isAuthenticated}
+              handleLogout={handleLogout}
+            />
           }
-        />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route
-          path="/aiproductchat"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <AiProductPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
+        >
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/aiproductchat" element={<AiProductPage />} />
+          <Route path="/inputorder" element={<OrderFormPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </Router>
   );
