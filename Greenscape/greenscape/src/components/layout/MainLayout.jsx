@@ -1,22 +1,30 @@
-// src/layouts/Layout.js
 import React from "react";
-import { useLocation, matchPath } from "react-router-dom";
+import { useLocation, matchPath, Outlet } from "react-router-dom";
 import Header from "../Header";
+import Footer from "../Footer";
 
-const Layout = ({ isAuthenticated, handleLogout, children }) => {
+const Layout = () => {
   const location = useLocation();
 
   const hideHeaderPaths = ["/login", "/registration"];
+  const hideFooterPaths = ["/login", "/registration"];
 
   const isProductDetailPage = matchPath("/product/:id", location.pathname);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       {!hideHeaderPaths.includes(location.pathname) && !isProductDetailPage && (
-        <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+        <Header />
       )}
-      {children}
-    </>
+
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
+      {!hideFooterPaths.includes(location.pathname) && !isProductDetailPage && (
+        <Footer />
+      )}
+    </div>
   );
 };
 
