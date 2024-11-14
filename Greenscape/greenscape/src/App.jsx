@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.jsx";
 import CreateProduct from "./pages/CreateProduct.jsx";
@@ -11,6 +11,7 @@ import AiProductPage from "./pages/AiProductPage.jsx";
 import OrderFormPage from "./pages/OrderFormPage.jsx";
 import OrderTable from "./components/tabel/OrderTabel.jsx";
 import RestrictedPage from "./pages/RestrictedPage.jsx";
+import PortofolioCardSection from "./components/section/PortofolioCardSection.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -69,6 +70,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/aiproductchat" element={<AiProductPage />} />
           <Route path="/inputorder" element={<OrderFormPage />} />
+          <Route path="/portofolio" element={<PortofolioCardSection />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

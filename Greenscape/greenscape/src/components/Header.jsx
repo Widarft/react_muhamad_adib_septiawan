@@ -20,7 +20,7 @@ const Header = () => {
           <ul id="nav-links" className="flex text-[16px]">
             {[
               { name: "HOME", path: "/" },
-              { name: "OUR WORK", path: "#" },
+              { name: "OUR WORK", path: "/portofolio" },
               { name: "CHAT NOW", path: "/aiproductchat" },
             ].map((item, index) => (
               <li key={index}>
@@ -66,9 +66,9 @@ const Header = () => {
           <ul className="flex flex-col items-center space-y-6">
             {[
               { name: "HOME", path: "/" },
-              { name: "OUR WORK", path: "#" },
+              { name: "OUR WORK", path: "portofolio" },
               { name: "CHAT NOW", path: "/aiproductchat" },
-              { name: "ORDER NOW", path: "/createProduct" },
+              { name: "ORDER NOW", path: "/inputorder" },
             ].map((item, index) => (
               <li key={index}>
                 <button
