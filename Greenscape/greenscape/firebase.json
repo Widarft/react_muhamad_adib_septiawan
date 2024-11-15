@@ -10,15 +10,20 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(js|mjs|jsx|ts|tsx|css|wasm)",
+        "source": "**/*.@(js|mjs|jsx|ts|tsx)",
         "headers": [
           {
             "key": "Cache-Control",
             "value": "public, max-age=0, must-revalidate"
-          },
+          }
+        ]
+      },
+      {
+        "source": "**/*.css",
+        "headers": [
           {
-            "key": "Content-Type",
-            "value": "application/javascript"
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
           }
         ]
       }
