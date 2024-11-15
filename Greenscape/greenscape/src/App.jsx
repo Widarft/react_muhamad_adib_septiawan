@@ -6,7 +6,7 @@ import PrivateRoute from "./hook/PrivateRoute.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
 import AdminLayout from "./components/layout/AdminLayout.jsx";
-import AiProductPage from "./pages/AiProductPage.jsx";
+import AiChatbotPage from "./pages/AiChatbotPage.jsx";
 import OrderFormPage from "./pages/OrderFormPage.jsx";
 import OrderTable from "./components/tabel/OrderTabel.jsx";
 import RestrictedPage from "./pages/RestrictedPage.jsx";
@@ -69,7 +69,7 @@ function App() {
           }
         >
           <Route path="/" element={<LandingPage />} />
-          <Route path="/aiproductchat" element={<AiProductPage />} />
+          <Route path="/aichatbot" element={<AiChatbotPage />} />
           <Route path="/inputorder" element={<OrderFormPage />} />
           <Route path="/portofolio" element={<PortfolioPage />} />
           <Route path="/portfolio/:id" element={<PortfolioDetail />} />

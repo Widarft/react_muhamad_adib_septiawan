@@ -21,7 +21,7 @@ const Header = () => {
             {[
               { name: "HOME", path: "/" },
               { name: "OUR WORK", path: "/portofolio" },
-              { name: "CHAT NOW", path: "/aiproductchat" },
+              { name: "CHAT NOW", path: "/aichatbot" },
             ].map((item, index) => (
               <li key={index}>
                 <button
