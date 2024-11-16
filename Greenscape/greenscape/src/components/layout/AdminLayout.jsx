@@ -23,7 +23,13 @@ const AdminLayout = ({ handleLogout }) => {
           isSidebarOpen ? "block" : "hidden"
         } lg:block w-64 bg-main-green text-second-cream min-h-screen p-4 fixed left-0 top-0 z-10`}
       >
-        <img src="/assets/logo/logo.png" alt="logo" />
+        <div className="h-20 flex items-center justify-center">
+          <img
+            src="/assets/logo/logo.png"
+            alt="logo"
+            className="hidden lg:block" // Logo hanya tampil di desktop
+          />
+        </div>
         <hr className="border-second-cream/20 mt-5" />
         <nav className="mt-6">
           <ul className="space-y-2">
