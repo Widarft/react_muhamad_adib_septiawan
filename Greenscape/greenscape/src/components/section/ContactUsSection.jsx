@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { sendEmail } from "../../service/emailConfig";
 
 const ContactUsSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSent, setIsSent] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    try {
+      const response = await sendEmail(formData);
+      console.log("SUCCESS!", response.status, response.text);
+      setIsSent(true);
+    } catch (error) {
+      console.error("FAILED...", error);
+    }
+  };
+
   return (
     <section className="py-16 px-4 bg-main-green flex flex-col lg:flex-row items-center justify-center">
-      {/* Bagian Gambar */}
       <div className="flex justify-center items-center w-full lg:w-auto">
         <div className="relative">
           <img
@@ -17,10 +45,8 @@ const ContactUsSection = () => {
         </div>
       </div>
 
-      {/* Bagian Form */}
-      <div className="max-w-md w-full bg-gray-blue p-8 shadow-lg">
-        {/* Form Kontak */}
-        <form className="space-y-6">
+      <div className="max-w-md w-full bg-gray-blue p-6 shadow-lg">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-1">
               FULL NAME
@@ -29,8 +55,11 @@ const ContactUsSection = () => {
               type="text"
               id="name"
               name="name"
+              value={formData.name}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dark-orange"
               placeholder="Enter your full name"
+              required
             />
           </div>
           <div>
@@ -41,8 +70,11 @@ const ContactUsSection = () => {
               type="email"
               id="email"
               name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dark-orange"
               placeholder="Enter your email"
+              required
             />
           </div>
           <div>
@@ -53,8 +85,11 @@ const ContactUsSection = () => {
               id="message"
               name="message"
               rows="4"
+              value={formData.message}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dark-orange"
               placeholder="Write your message here"
+              required
             ></textarea>
           </div>
           <button
@@ -64,6 +99,15 @@ const ContactUsSection = () => {
             SUBMIT
           </button>
         </form>
+
+        {/* Div pembungkus untuk menjaga tinggi form */}
+        <div className="relative mt-4">
+          {isSent && (
+            <p className="text-green-600 absolute inset-0 flex items-center justify-center">
+              Your message has been sent!
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );
