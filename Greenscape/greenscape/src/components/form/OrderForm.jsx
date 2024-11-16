@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useOrderStore from "../../store/useOrderStore";
+import OrderFormModal from "../modal/OrderFormModal";
 
 const OrderForm = () => {
   const [formData, setFormData] = useState({
@@ -10,26 +11,75 @@ const OrderForm = () => {
     serviceType: "",
     packageType: "",
     startDate: "",
-    budgetRange: "",
+    budget: "",
   });
+  const { addOrder, loading, error } = useOrderStore();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { addOrder } = useOrderStore();
-
-  // Handle Change
+  // Handle perubahan input
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "file" ? files[0] : value,
-    });
+    const { name, value } = e.target;
+
+    if (name === "budget") {
+      // Hapus karakter selain angka
+      const numericValue = value.replace(/\D/g, "");
+
+      // Format dengan titik sebagai pemisah ribuan
+      const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      setFormData({
+        ...formData,
+        [name]: formattedValue,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
-  // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    addOrder(formData);
-    alert("Order has been successfully submitted!");
-    setFormData({});
+
+    if (!/^\d+$/.test(formData.phone)) {
+      alert("Phone number must contain only numbers.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (formData.budget && isNaN(formData.budget.replace(/\./g, ""))) {
+      alert("Budget range must be a valid number.");
+      return;
+    }
+
+    setModalOpen(true);
+  };
+
+  const confirmSubmit = () => {
+    const formattedData = {
+      ...formData,
+      budget: formData.budget
+        ? Number(formData.budget.replace(/\./g, ""))
+        : null,
+    };
+
+    addOrder(formattedData);
+
+    setFormData({
+      fullName: "",
+      phone: "",
+      email: "",
+      address: "",
+      serviceType: "",
+      packageType: "",
+      startDate: "",
+      budget: "",
+    });
+    setIsSubmitted(true);
+    setModalOpen(false);
   };
 
   return (
@@ -38,11 +88,11 @@ const OrderForm = () => {
         className="w-[90vw] max-w-4xl bg-white shadow-lg p-8 rounded-lg"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl font-bold mb-6 text-center text-main-green">
+        <h2 className="text-2xl font-bold my-6 text-center text-main-green">
           ORDER FORM
         </h2>
 
-        {/* Contact Information */}
+        {/* Informasi Kontak */}
         <div className="mb-4">
           <label className="block mb-2">Full Name:</label>
           <input
@@ -79,7 +129,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Project Location */}
+        {/* Lokasi Proyek */}
         <div className="mb-4">
           <label className="block mb-2">Full Address:</label>
           <input
@@ -92,7 +142,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Service Type */}
+        {/* Jenis Layanan */}
         <div className="mb-4">
           <label className="block mb-2">Service Type:</label>
           <select
@@ -109,7 +159,7 @@ const OrderForm = () => {
           </select>
         </div>
 
-        {/* Start Date */}
+        {/* Tanggal Mulai */}
         <div className="mb-4">
           <label className="block mb-2">Start Date:</label>
           <input
@@ -122,7 +172,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Budget Estimate */}
+        {/* Paket dan Anggaran */}
         {formData.serviceType === "Maintenance" ? (
           <div className="mb-4">
             <label className="block mb-2">Maintenance Package:</label>
@@ -136,35 +186,51 @@ const OrderForm = () => {
               <option value="">Select Maintenance Package</option>
               <option value="Basic">Basic Package</option>
               <option value="Premium">Premium Package</option>
-              <option value="Exclusive">Exclusive Package</option>
             </select>
           </div>
         ) : (
-          <div className="mb-4">
-            <label className="block mb-2">Budget Range:</label>
-            <select
-              name="budgetRange"
-              value={formData.budgetRange}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="">Select Budget</option>
-              <option value="Under 5M">Under 5 Million</option>
-              <option value="5M - 10M">5 Million - 10 Million</option>
-              <option value="Above 10M">Above 10 Million</option>
-            </select>
+          <div className="mb-4 relative">
+            <label className="block mb-2">Estimated Budget:</label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                Rp.
+              </span>
+              <input
+                type="text"
+                name="budget"
+                value={formData.budget}
+                onChange={handleChange}
+                className="w-full pl-10 p-2 border rounded"
+              />
+            </div>
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 mt-10 bg-dark-orange text-main-black font-bold rounded hover:bg-light-orange transition"
+          className={`w-full p-2 ${
+            loading ? "bg-gray-400" : "bg-dark-orange"
+          } text-main-black hover:bg-light-orange font-semibold rounded my-5`}
+          disabled={loading}
         >
-          Submit Order
+          {loading ? "Submitting..." : "Submit Order"}
         </button>
+
+        {/* Feedback sukses */}
+        {isSubmitted && (
+          <p className="text-green-500 mb-2 text-center">
+            Order has been successfully submitted!
+          </p>
+        )}
+
+        {/* Error handling */}
+        {error && <p className="text-red-500 mb-2 text-center">{error}</p>}
       </form>
+      <OrderFormModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={confirmSubmit}
+      />
     </div>
   );
 };
