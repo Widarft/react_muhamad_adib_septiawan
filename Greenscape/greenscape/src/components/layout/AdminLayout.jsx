@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, Routes, Route } from "react-router-dom";
 import OrderTable from "../tabel/OrderTabel";
 import PortfolioForm from "../form/PortfolioForm";
@@ -6,15 +6,30 @@ import PortfolioTabel from "../tabel/PortfolioTabel";
 
 const AdminLayout = ({ handleLogout }) => {
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State untuk sidebar
 
   const isActiveRoute = (path) =>
     location.pathname === path ? "bg-green-700 text-white" : "";
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle visibilitas sidebar
+  };
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-main-green text-second-cream min-h-screen p-4 fixed left-0 top-0">
-        <img src="/assets/logo/logo.png" alt="logo" />
+      <div
+        className={`${
+          isSidebarOpen ? "block" : "hidden"
+        } lg:block w-64 bg-main-green text-second-cream min-h-screen p-4 fixed left-0 top-0 z-10`}
+      >
+        <div className="h-20 flex items-center justify-center">
+          <img
+            src="/assets/logo/logo.png"
+            alt="logo"
+            className="hidden lg:block" // Logo hanya tampil di desktop
+          />
+        </div>
         <hr className="border-second-cream/20 mt-5" />
         <nav className="mt-6">
           <ul className="space-y-2">
@@ -61,6 +76,16 @@ const AdminLayout = ({ handleLogout }) => {
           </button>
         </div>
       </div>
+
+      {/* Burger button untuk mobile */}
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden p-4 absolute top-4 left-4 z-20"
+      >
+        <span className="block w-6 h-1 bg-black mb-2"></span>
+        <span className="block w-6 h-1 bg-black mb-2"></span>
+        <span className="block w-6 h-1 bg-black"></span>
+      </button>
 
       {/* Main content */}
       <div className="flex-1 ml-64 p-8">
