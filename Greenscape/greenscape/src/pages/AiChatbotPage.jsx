@@ -4,7 +4,8 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
-import useProductStore from "../store/useProductStore";
+import usePortfolioStore from "../store/usePortfolioStore";
+import projectData from "../data/projectData";
 import ReactMarkdown from "react-markdown";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
@@ -29,20 +30,20 @@ const safetySettings = [
 ];
 
 const AiChatbotPage = () => {
-  const { products, fetchProducts } = useProductStore();
+  const { portfolios, fetchPortfolios } = usePortfolioStore();
   const [prompt, setPrompt] = useState("");
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchProducts();
+    fetchPortfolios();
 
     const savedHistory = localStorage.getItem("geminiHistory");
     if (savedHistory) {
       setHistory(JSON.parse(savedHistory));
     }
-  }, [fetchProducts]);
+  }, [fetchPortfolios]);
 
   const saveHistory = (newHistory) => {
     setHistory(newHistory);
@@ -61,14 +62,19 @@ const AiChatbotPage = () => {
         .map((item) => `User: ${item.prompt}\nAI: ${item.response}`)
         .join("\n");
 
-      const productDataString = JSON.stringify(products);
+      const portfolioDataString = JSON.stringify(portfolios);
+      const projectDataString = JSON.stringify(projectData);
 
       const fullPrompt = `
-      Kamu adalah AI untuk customer service dari Perusahaan penyedia jasa reboisasi, landscaping taman dan mainteance taman bernama GreenScape. 
-      Dan namamu adalah Greenly Tugasmu adalah membantu user untuk konsultasi tentang jasa kami yang dimiliki oleh perusahaan kita. 
-      Untuk tambahan price disitu kursnya adalah dollar bukan rupiah.
-      Kamu bisa mengambil informasi produk dari data berikut:\n\n${productDataString}
-      
+      Kamu adalah AI untuk customer service dari Perusahaan penyedia jasa reboisasi, landscaping taman, dan maintenance taman bernama GreenScape.
+      Dan namamu adalah Greenly. Tugasmu adalah membantu user untuk konsultasi tentang jasa yang dimiliki oleh perusahaan kita.
+
+      Berikut adalah informasi portofolio perusahaan:
+      ${portfolioDataString}
+
+      Berikut adalah detail proyek dan layanan perusahaan:
+      ${projectDataString}
+
       ${contextPrompt}\nUser: ${userPrompt}\nAI:
     `;
 
