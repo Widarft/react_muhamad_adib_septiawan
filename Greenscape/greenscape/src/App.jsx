@@ -52,7 +52,7 @@ function App() {
                 <Routes>
                   <Route index element={<OrderTable />} />
                   <Route path="portfolioform" element={<PortfolioForm />} />
-                  <Route path="portfoliotable" element={<PortfolioTabel />} />
+                  <Route path="portfoliotable" element={<PortfolioTabel />} />\
                 </Routes>
               </AdminLayout>
             </PrivateRoute>
