@@ -19,9 +19,9 @@ const Footer = () => {
           <div className="flex flex-col items-start">
             <h3 className="font-semibold mb-2 text-lg">OUR PRODUCT</h3>
             <ul className="space-y-1 text-base">
-              <li>Features</li>
-              <li>Pricing</li>
-              <li>Book a demo</li>
+              <li>Reforestation</li>
+              <li>Landscaping</li>
+              <li>Maintenance</li>
             </ul>
           </div>
 
