@@ -8,16 +8,31 @@ const OrderTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  // State untuk pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Jumlah data per halaman
+
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
 
   if (loading) return <LoadingSpinner />;
 
+  // Mengurutkan data berdasarkan tanggal mulai terbaru
   const sortedOrders = [...orders].sort(
     (a, b) => new Date(b.startDate) - new Date(a.startDate)
   );
 
+  // Hitung total halaman
+  const totalPages = Math.ceil(sortedOrders.length / itemsPerPage);
+
+  // Data yang ditampilkan berdasarkan halaman saat ini
+  const currentOrders = sortedOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Fungsi untuk membuka dan menutup modal
   const openModal = (id) => {
     setSelectedOrderId(id);
     setIsModalOpen(true);
@@ -28,6 +43,7 @@ const OrderTable = () => {
     setSelectedOrderId(null);
   };
 
+  // Fungsi untuk mengubah status menjadi selesai
   const confirmMarkAsDone = async () => {
     try {
       if (selectedOrderId) {
@@ -40,6 +56,13 @@ const OrderTable = () => {
       alert("Failed to update order status.");
     } finally {
       closeModal();
+    }
+  };
+
+  // Fungsi untuk navigasi halaman
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -64,7 +87,7 @@ const OrderTable = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedOrders.map((order) => (
+            {currentOrders.map((order) => (
               <tr key={order.id}>
                 <td className="border px-4 py-2">{order.fullName}</td>
                 <td className="border px-4 py-2">{order.phone}</td>
@@ -93,6 +116,44 @@ const OrderTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Informasi Pagination */}
+      <div className="flex flex-col items-center mt-4">
+        <span className="text-sm text-gray-700 dark:text-gray-400">
+          Showing{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {(currentPage - 1) * itemsPerPage + 1}
+          </span>{" "}
+          to{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {Math.min(currentPage * itemsPerPage, sortedOrders.length)}
+          </span>{" "}
+          of{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {sortedOrders.length}
+          </span>{" "}
+          Entries
+        </span>
+
+        {/* Tombol Pagination */}
+        <div className="inline-flex mt-2">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-600 rounded-s hover:bg-gray-800 disabled:bg-gray-300"
+          >
+            Prev
+          </button>
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-600 rounded-e hover:bg-gray-800 disabled:bg-gray-300"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
       <OrderTabelConfirmationModal
         isOpen={isModalOpen}
         onClose={closeModal}

@@ -12,6 +12,10 @@ const PortfolioTable = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [portfolioToDelete, setPortfolioToDelete] = useState(null);
 
+  // State untuk Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Jumlah data per halaman
+
   useEffect(() => {
     fetchPortfolios();
   }, [fetchPortfolios]);
@@ -38,6 +42,22 @@ const PortfolioTable = () => {
     setIsDeleteModalOpen(false);
   };
 
+  // Hitung total halaman
+  const totalPages = Math.ceil(portfolios.length / itemsPerPage);
+
+  // Data yang ditampilkan berdasarkan halaman saat ini
+  const currentPortfolios = portfolios.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Fungsi untuk navigasi halaman
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -59,7 +79,7 @@ const PortfolioTable = () => {
           </tr>
         </thead>
         <tbody>
-          {portfolios.map((portfolio) => (
+          {currentPortfolios.map((portfolio) => (
             <tr key={portfolio.id}>
               <td className="py-2 px-4 border">{portfolio.title}</td>
               <td className="py-2 px-4 border">
@@ -72,7 +92,7 @@ const PortfolioTable = () => {
               <td className="py-2 px-4 border">{portfolio.location}</td>
               <td className="py-2 px-4 border">{portfolio.clientName}</td>
               <td className="py-2 px-4 border">
-                {portfolio.startDate} - {portfolio.endDate}
+                {portfolio.startDate} to {portfolio.endDate}
               </td>
               <td className="py-2 px-4 border">{portfolio.category}</td>
               <td className="py-2 px-4 border">{portfolio.description}</td>
@@ -96,6 +116,43 @@ const PortfolioTable = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Informasi Pagination */}
+      <div className="flex flex-col items-center mt-4">
+        <span className="text-sm text-gray-700 dark:text-gray-400">
+          Showing{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {(currentPage - 1) * itemsPerPage + 1}
+          </span>{" "}
+          to{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {Math.min(currentPage * itemsPerPage, portfolios.length)}
+          </span>{" "}
+          of{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-500">
+            {portfolios.length}
+          </span>{" "}
+          Entries
+        </span>
+
+        {/* Tombol Pagination */}
+        <div className="inline-flex mt-2">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-600 rounded-s hover:bg-gray-800 disabled:bg-gray-300"
+          >
+            Prev
+          </button>
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-600 rounded-e hover:bg-gray-800 disabled:bg-gray-300"
+          >
+            Next
+          </button>
+        </div>
+      </div>
 
       {selectedPortfolio && (
         <EditPortfolioModal

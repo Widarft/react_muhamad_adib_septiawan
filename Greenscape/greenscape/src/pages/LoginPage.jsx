@@ -42,8 +42,8 @@ const LoginForm = ({ setIsAuthenticated, setIsAdmin }) => {
     setIsSubmitted(true);
 
     if (validateForm()) {
-      const adminEmail = "admin@example.com";
-      const adminPassword = "adminpassword";
+      const adminEmail = "greenscapeperusahaan@gmail.com";
+      const adminPassword = "greenhijau12";
 
       if (email === adminEmail && password === adminPassword) {
         setIsAuthenticated(true);
