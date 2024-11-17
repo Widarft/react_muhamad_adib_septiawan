@@ -14,14 +14,17 @@ const ContactUsSection = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle submit for send massage to email
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      // Make sure that email addres was correct
       alert("Please enter a valid email address.");
       return;
     }
     try {
+      // Send massage to email wirh emailjs
       const response = await sendEmail(formData);
       console.log("SUCCESS!", response.status, response.text);
       setIsSent(true);
@@ -32,6 +35,7 @@ const ContactUsSection = () => {
 
   return (
     <section className="py-16 px-4 bg-main-green flex flex-col lg:flex-row items-center justify-center">
+      {/* Image Content */}
       <div className="flex justify-center items-center w-full lg:w-auto">
         <div className="relative">
           <img
@@ -46,6 +50,7 @@ const ContactUsSection = () => {
       </div>
 
       <div className="max-w-md w-full bg-gray-blue p-6 shadow-lg">
+        {/* Input Form Contact Us */}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -99,8 +104,7 @@ const ContactUsSection = () => {
             SUBMIT
           </button>
         </form>
-
-        {/* Div pembungkus untuk menjaga tinggi form */}
+        {/* Succes Massage */}
         <div className="relative mt-4">
           {isSent && (
             <p className="text-green-600 absolute inset-0 flex items-center justify-center">

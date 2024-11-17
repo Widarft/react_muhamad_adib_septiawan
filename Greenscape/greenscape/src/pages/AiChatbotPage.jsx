@@ -8,16 +8,19 @@ import usePortfolioStore from "../store/usePortfolioStore";
 import projectData from "../data/projectData";
 import ReactMarkdown from "react-markdown";
 
+// Initialize Google Generative AI with the API key
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
+// Configuration for text generation
 const generationConfig = {
-  temperature: 0.5,
-  topP: 0.95,
-  topK: 64,
-  maxOutputTokens: 1000,
+  temperature: 0.5, // Controls the randomness of the output
+  topP: 0.95, // Controls the diversity of the output
+  topK: 64, // Limits the number of token candidates
+  maxOutputTokens: 1000, // Maximum tokens in the response
   responseMimeType: "text/plain",
 };
 
+// Safety settings to filter harmful content
 const safetySettings = [
   {
     category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
@@ -36,6 +39,7 @@ const AiChatbotPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Fetch portfolios and load chat history from local storage on component mount
   useEffect(() => {
     fetchPortfolios();
 
@@ -45,11 +49,13 @@ const AiChatbotPage = () => {
     }
   }, [fetchPortfolios]);
 
+  // Save the chat history to state and local storage
   const saveHistory = (newHistory) => {
     setHistory(newHistory);
     localStorage.setItem("geminiHistory", JSON.stringify(newHistory));
   };
 
+  // Function to generate AI response based on user input and context
   const generateResponse = async (userPrompt, conversationHistory) => {
     try {
       const model = genAI.getGenerativeModel({
@@ -58,26 +64,30 @@ const AiChatbotPage = () => {
         safetySettings,
       });
 
+      // Build the conversation context from chat history
       const contextPrompt = conversationHistory
         .map((item) => `User: ${item.prompt}\nAI: ${item.response}`)
         .join("\n");
 
+      // Convert portfolio and project data to string format
       const portfolioDataString = JSON.stringify(portfolios);
       const projectDataString = JSON.stringify(projectData);
 
+      // Construct the full prompt with context and user input
       const fullPrompt = `
-      Kamu adalah AI untuk customer service dari Perusahaan penyedia jasa reboisasi, landscaping taman, dan maintenance taman bernama GreenScape.
-      Dan namamu adalah Greenly. Tugasmu adalah membantu user untuk konsultasi tentang jasa yang dimiliki oleh perusahaan kita.
+      You are an AI assistant named Greenly for a company named GreenScape that provides reforestation, garden landscaping, and garden maintenance services. 
+      Your job is to assist users with consultations about the company's services.
 
-      Berikut adalah informasi portofolio perusahaan:
+      Here is the company's portfolio information:
       ${portfolioDataString}
 
-      Berikut adalah detail proyek dan layanan perusahaan:
+      Here are the project details and services provided by the company:
       ${projectDataString}
 
       ${contextPrompt}\nUser: ${userPrompt}\nAI:
     `;
 
+      // Generate the AI response
       const result = await model.generateContent(fullPrompt);
       const response = result.response;
       return response.text();
@@ -86,16 +96,21 @@ const AiChatbotPage = () => {
     }
   };
 
+  // Handle form submission to generate response
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent submission if input is empty
     if (!prompt.trim()) return;
 
     setIsLoading(true);
     setError(null);
 
     try {
+      // Generate AI response using the prompt and history
       const aiResponse = await generateResponse(prompt, history);
 
+      // Create a new history item
       const newHistoryItem = {
         id: Date.now(),
         prompt,
@@ -103,9 +118,11 @@ const AiChatbotPage = () => {
         timestamp: new Date().toISOString(),
       };
 
+      // Update the history state and save it
       const newHistory = [newHistoryItem, ...history];
       saveHistory(newHistory);
 
+      // Clear the input prompt
       setPrompt("");
     } catch (err) {
       setError(err.message);
@@ -114,6 +131,7 @@ const AiChatbotPage = () => {
     }
   };
 
+  // Delete a specific history item by ID
   const deleteHistoryItem = (id) => {
     const newHistory = history.filter((item) => item.id !== id);
     saveHistory(newHistory);
@@ -123,72 +141,66 @@ const AiChatbotPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-blue shadow-none">
       <div className="w-full max-w-4xl mx-auto mt-10 p-4 h-screen flex flex-col">
         <div className="bg-gray-blue rounded-md flex-1 overflow-y-auto">
-          {/* Header */}
+          {/* Header section */}
           <div className="p-6 border rounded-t-md bg-main-green border-gray-200">
             <h2 className="text-2xl text-center font-bold text-second-cream">
               AI Assistant For Consultation
             </h2>
           </div>
 
-          {/* Main Content */}
+          {/* Main content section */}
           <div className="p-6 bg-white-news flex-1 flex flex-col">
+            {/* Display error message if any */}
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-600 rounded-md">
                 {error}
               </div>
             )}
 
-            {/* Input Form */}
+            {/* User input form */}
             <form onSubmit={handleSubmit} className="mb-6 flex-shrink-0">
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Ask Me anything..."
+                  placeholder="Ask me anything..."
                   disabled={isLoading}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green disabled:bg-gray-100"
+                  className="flex-1 px-4 py-2 border rounded-md"
                 />
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-6 py-2 bg-dark-orange text-main-black font-semibold rounded-md hover:bg-light-orange focus:outline-none focus:ring-2 focus:ring-main-green focus:ring-offset-2 disabled:bg-light-orange transition-colors"
+                  className="px-6 py-2 bg-dark-orange text-main-black font-semibold rounded-md"
                 >
                   {isLoading ? "Generating..." : "Ask Greenly"}
                 </button>
               </div>
             </form>
 
-            {/* History Section */}
+            {/* Conversation history */}
             <div className="flex-1 overflow-y-auto">
               <h3 className="text-lg font-semibold text-main-green mb-4">
                 Conversation History
               </h3>
-              <div className="space-y-4 max-h-full pr-2 overflow-y-auto">
+              <div className="space-y-4 max-h-full pr-2">
                 {history.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white rounded-lg p-4 border border-gray-200"
-                  >
+                  <div key={item.id} className="bg-white rounded-lg p-4 border">
+                    {/* Display user prompt and AI response */}
                     <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <p className="font-medium text-gray-800">
-                          {item.prompt}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => deleteHistoryItem(item.id)}
-                          className="text-sm px-3 py-1 text-red-600 hover:bg-red-50 rounded-md transition-colors"
-                        >
-                          Delete
-                        </button>
-                      </div>
+                      <p className="font-medium">{item.prompt}</p>
+                      {/* Button to delete a specific history item */}
+                      <button
+                        onClick={() => deleteHistoryItem(item.id)}
+                        className="text-sm text-red-600"
+                      >
+                        Delete
+                      </button>
                     </div>
-                    <ReactMarkdown className="text-sm text-gray-600 whitespace-pre-wrap">
+                    <ReactMarkdown className="text-sm">
                       {item.response}
                     </ReactMarkdown>
-                    <p className="text-xs text-gray-400 mt-2">
+                    <p className="text-xs">
                       {new Date(item.timestamp).toLocaleString()}
                     </p>
                   </div>

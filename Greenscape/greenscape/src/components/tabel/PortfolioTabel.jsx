@@ -12,23 +12,27 @@ const PortfolioTable = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [portfolioToDelete, setPortfolioToDelete] = useState(null);
 
-  // State untuk Pagination
+  // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Jumlah data per halaman
+  const itemsPerPage = 5; // Amount of data per page
 
+  // Use for fetch data from storage
   useEffect(() => {
     fetchPortfolios();
   }, [fetchPortfolios]);
 
+  // Use for edit data portfolio
   const handleEdit = (portfolio) => {
     setSelectedPortfolio(portfolio);
   };
 
+  // Use for delete data portfolio
   const handleDelete = (id) => {
     setPortfolioToDelete(id);
     setIsDeleteModalOpen(true);
   };
 
+  // Use for confirmation in delete data portfolio
   const confirmDelete = () => {
     if (portfolioToDelete) {
       deletePortfolio(portfolioToDelete);
@@ -37,21 +41,22 @@ const PortfolioTable = () => {
     }
   };
 
+  // Use for cancel confirmation in delete data portfolio
   const cancelDelete = () => {
     setPortfolioToDelete(null);
     setIsDeleteModalOpen(false);
   };
 
-  // Hitung total halaman
+  // Count total pages
   const totalPages = Math.ceil(portfolios.length / itemsPerPage);
 
-  // Data yang ditampilkan berdasarkan halaman saat ini
+  // The data displayed is based on the current page
   const currentPortfolios = portfolios.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Fungsi untuk navigasi halaman
+  // Function for page navigation
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -117,7 +122,7 @@ const PortfolioTable = () => {
         </tbody>
       </table>
 
-      {/* Informasi Pagination */}
+      {/* Information Pagination */}
       <div className="flex flex-col items-center mt-4">
         <span className="text-sm text-gray-700 dark:text-gray-400">
           Showing{" "}
@@ -135,7 +140,7 @@ const PortfolioTable = () => {
           Entries
         </span>
 
-        {/* Tombol Pagination */}
+        {/* Button Pagination */}
         <div className="inline-flex mt-2">
           <button
             onClick={() => goToPage(currentPage - 1)}

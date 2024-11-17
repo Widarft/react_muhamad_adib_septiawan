@@ -17,16 +17,12 @@ const OrderForm = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Handle perubahan input
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "budget") {
-      // Hapus karakter selain angka
-      const numericValue = value.replace(/\D/g, "");
-
-      // Format dengan titik sebagai pemisah ribuan
-      const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      const numericValue = value.replace(/\D/g, ""); // Delete character non-numerik
+      const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Formatting with a dot as the thousands separator
       setFormData({
         ...formData,
         [name]: formattedValue,
@@ -66,8 +62,9 @@ const OrderForm = () => {
         : null,
     };
 
-    addOrder(formattedData);
+    addOrder(formattedData); // Send order data to store
 
+    // Empty the form after submitting
     setFormData({
       fullName: "",
       phone: "",
@@ -92,7 +89,7 @@ const OrderForm = () => {
           ORDER FORM
         </h2>
 
-        {/* Informasi Kontak */}
+        {/* Contact Information */}
         <div className="mb-4">
           <label className="block mb-2">Full Name:</label>
           <input
@@ -129,7 +126,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Lokasi Proyek */}
+        {/* Project Location */}
         <div className="mb-4">
           <label className="block mb-2">Full Address:</label>
           <input
@@ -142,7 +139,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Jenis Layanan */}
+        {/* Services Type */}
         <div className="mb-4">
           <label className="block mb-2">Service Type:</label>
           <select
@@ -159,7 +156,7 @@ const OrderForm = () => {
           </select>
         </div>
 
-        {/* Tanggal Mulai */}
+        {/* Date Start */}
         <div className="mb-4">
           <label className="block mb-2">Start Date:</label>
           <input
@@ -172,7 +169,7 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Paket dan Anggaran */}
+        {/* Package and Budget */}
         {formData.serviceType === "Maintenance" ? (
           <div className="mb-4">
             <label className="block mb-2">Maintenance Package:</label>
@@ -216,7 +213,7 @@ const OrderForm = () => {
           {loading ? "Submitting..." : "Submit Order"}
         </button>
 
-        {/* Feedback sukses */}
+        {/* Feedback success */}
         {isSubmitted && (
           <p className="text-green-500 mb-2 text-center">
             Order has been successfully submitted!

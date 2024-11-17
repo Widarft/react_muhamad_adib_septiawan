@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { IoArrowBack } from "react-icons/io5"; // Import ikon panah
+import { IoArrowBack } from "react-icons/io5";
 import usePortfolioStore from "../store/usePortfolioStore";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
@@ -8,12 +8,14 @@ const PortfolioDetail = () => {
   const { id } = useParams();
   const { portfolios, fetchPortfolios } = usePortfolioStore();
   const [portfolio, setPortfolio] = useState(null);
-  const navigate = useNavigate(); // Inisialisasi useNavigate
+  const navigate = useNavigate();
 
+  // Use for fetch data from storage
   useEffect(() => {
     fetchPortfolios();
   }, [fetchPortfolios]);
 
+  // Find and set the portfolio item matching the `id` from the URL
   useEffect(() => {
     const selectedPortfolio = portfolios.find((item) => item.id === id);
     if (selectedPortfolio) {

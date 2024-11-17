@@ -7,10 +7,11 @@ import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 const PortfolioPage = () => {
   const { portfolios, fetchPortfolios, loading, error } = usePortfolioStore();
 
-  // State untuk Pagination
+  // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 6; // Amount of data per page
 
+  // Use for fetch data from storage
   useEffect(() => {
     fetchPortfolios();
   }, [fetchPortfolios]);
@@ -21,16 +22,16 @@ const PortfolioPage = () => {
     return <p className="text-center">No projects found.</p>;
   }
 
-  // Hitung total halaman
+  // Count total pages
   const totalPages = Math.ceil(portfolios.length / itemsPerPage);
 
-  // Data yang ditampilkan berdasarkan halaman saat ini
+  // The data displayed is based on the current page
   const currentPortfolios = portfolios.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Fungsi untuk navigasi halaman
+  // Function for page navigation
   const goToPage = (page) => {
     setCurrentPage(page);
   };

@@ -6,13 +6,13 @@ import PortfolioTabel from "../tabel/PortfolioTabel";
 
 const AdminLayout = ({ handleLogout }) => {
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State untuk sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const isActiveRoute = (path) =>
     location.pathname === path ? "bg-green-700 text-white" : "";
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen); // Toggle visibilitas sidebar
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
@@ -27,7 +27,7 @@ const AdminLayout = ({ handleLogout }) => {
           <img
             src="/assets/logo/logo.png"
             alt="logo"
-            className="hidden lg:block" // Logo hanya tampil di desktop
+            className="hidden lg:block"
           />
         </div>
         <hr className="border-second-cream/20 mt-5" />

@@ -32,7 +32,6 @@ const HeroSection = () => {
         {/* Image Content */}
         <div className="w-full lg:w-1/2 flex justify-center lg:justify-end px-4 lg:px-0">
           {" "}
-          {/* Adjusted to lg:justify-end */}
           <img
             src="/assets/img/hero-image.png"
             alt="Landscaping Image"

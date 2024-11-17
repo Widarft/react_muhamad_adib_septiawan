@@ -5,7 +5,7 @@ const AboutUsSection = () => {
     <section className="py-16 px-4 bg-second-cream text-main-black">
       {/* Section About Us */}
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
-        {/* Gambar Kiri */}
+        {/* Left Image */}
         <div className="lg:w-1/2 w-full flex justify-center lg:justify-start">
           <img
             src="/assets/img/image-aboutus-2.png"
@@ -13,7 +13,7 @@ const AboutUsSection = () => {
             className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto rounded-lg shadow-lg"
           />
         </div>
-        {/* Teks Kanan */}
+        {/* Right Text */}
         <div className="lg:w-1/2 w-full text-center lg:text-left">
           <h3 className="text-2xl text-center md:text-3xl lg:text-4xl font-semibold mb-6">
             ABOUT US
@@ -33,7 +33,7 @@ const AboutUsSection = () => {
 
       {/* Section Crafting Beauty */}
       <div className="max-w-7xl pt-20 mx-auto flex flex-col lg:flex-row-reverse items-center justify-between gap-12">
-        {/* Gambar Kanan */}
+        {/* Image Content */}
         <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
           <img
             src="/assets/img/image-aboutus-1.png"
@@ -41,7 +41,7 @@ const AboutUsSection = () => {
             className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto rounded-full shadow-lg"
           />
         </div>
-        {/* Teks Kiri */}
+        {/* Text Content */}
         <div className="lg:w-1/2 w-full text-center lg:text-left">
           <h3 className="text-2xl text-center md:text-3xl lg:text-4xl font-semibold mb-6">
             CRAFTING BEAUTY IN HARMONY WITH NATURE

@@ -26,6 +26,7 @@ const PortfolioForm = () => {
     setForm({ ...form, [name]: value });
   };
 
+  // Handle change for image
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
@@ -47,9 +48,9 @@ const PortfolioForm = () => {
 
   const confirmSubmission = async () => {
     await addPortfolio(form);
-    setForm(initialFormState);
-    setImagePreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    setForm(initialFormState); // Empty the form after submitting
+    setImagePreview(null); // Empty the image preview after submitting
+    if (fileInputRef.current) fileInputRef.current.value = ""; // Empty the image title after submitting
     setIsModalOpen(false);
   };
 
@@ -58,6 +59,7 @@ const PortfolioForm = () => {
       <h1 className="text-2xl font-bold mb-10 text-center text-main-green">
         ADD NEW PROJECT
       </h1>
+      {/* Project Title */}
       <form onSubmit={openModal} className="space-y-4">
         <input
           type="text"
@@ -68,6 +70,7 @@ const PortfolioForm = () => {
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
+        {/* Project Image */}
         <input
           type="file"
           name="imageFile"
@@ -84,6 +87,7 @@ const PortfolioForm = () => {
             className="w-32 h-32 object-cover my-4"
           />
         )}
+        {/* Project Location */}
         <input
           type="text"
           name="location"
@@ -93,6 +97,7 @@ const PortfolioForm = () => {
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
+        {/* Client Name */}
         <input
           type="text"
           name="clientName"
@@ -102,6 +107,7 @@ const PortfolioForm = () => {
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
+        {/* Date Start */}
         <input
           type="date"
           name="startDate"
@@ -110,6 +116,7 @@ const PortfolioForm = () => {
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
+        {/* Date End */}
         <input
           type="date"
           name="endDate"
@@ -118,6 +125,7 @@ const PortfolioForm = () => {
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
+        {/* Description */}
         <textarea
           name="description"
           placeholder="Description"
@@ -125,6 +133,7 @@ const PortfolioForm = () => {
           onChange={handleChange}
           className="block w-full px-3 py-2 border border-gray-300 rounded-md"
         ></textarea>
+        {/* Select Services */}
         <select
           name="category"
           value={form.category}

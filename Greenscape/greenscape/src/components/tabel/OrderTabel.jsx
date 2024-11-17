@@ -8,31 +8,31 @@ const OrderTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
-  // State untuk pagination
+  // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Jumlah data per halaman
+  const itemsPerPage = 10; // Amount of data per page
 
+  // Use for fetch data from storage
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
 
   if (loading) return <LoadingSpinner />;
 
-  // Mengurutkan data berdasarkan tanggal mulai terbaru
+  // Sorts data by latest start date
   const sortedOrders = [...orders].sort(
     (a, b) => new Date(b.startDate) - new Date(a.startDate)
   );
 
-  // Hitung total halaman
+  // Count total pages
   const totalPages = Math.ceil(sortedOrders.length / itemsPerPage);
 
-  // Data yang ditampilkan berdasarkan halaman saat ini
+  // The data displayed is based on the current page
   const currentOrders = sortedOrders.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Fungsi untuk membuka dan menutup modal
   const openModal = (id) => {
     setSelectedOrderId(id);
     setIsModalOpen(true);
@@ -43,7 +43,7 @@ const OrderTable = () => {
     setSelectedOrderId(null);
   };
 
-  // Fungsi untuk mengubah status menjadi selesai
+  // Function to change the status to complete
   const confirmMarkAsDone = async () => {
     try {
       if (selectedOrderId) {
@@ -59,7 +59,7 @@ const OrderTable = () => {
     }
   };
 
-  // Fungsi untuk navigasi halaman
+  // Function for page navigation
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -117,7 +117,7 @@ const OrderTable = () => {
         </table>
       </div>
 
-      {/* Informasi Pagination */}
+      {/* Information Pagination */}
       <div className="flex flex-col items-center mt-4">
         <span className="text-sm text-gray-700 dark:text-gray-400">
           Showing{" "}
@@ -135,7 +135,7 @@ const OrderTable = () => {
           Entries
         </span>
 
-        {/* Tombol Pagination */}
+        {/* Button Pagination */}
         <div className="inline-flex mt-2">
           <button
             onClick={() => goToPage(currentPage - 1)}

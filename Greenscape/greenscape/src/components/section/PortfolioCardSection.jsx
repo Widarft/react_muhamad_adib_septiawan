@@ -6,10 +6,12 @@ const PortfolioCardSection = ({ portfolio }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
+  // Handle click for navigate to detail portfolios
   const handleClick = () => {
     navigate(`/portfolio/${portfolio.id}`);
   };
 
+  // To short the description in card
   const getShortDescription = (description) => {
     const words = description.split(" ");
     if (words.length > 10) {
@@ -18,6 +20,7 @@ const PortfolioCardSection = ({ portfolio }) => {
     return description;
   };
 
+  // To set loading for image
   const handleImageLoad = () => {
     setLoading(false);
   };
@@ -33,6 +36,7 @@ const PortfolioCardSection = ({ portfolio }) => {
             <LoadingSpinner />{" "}
           </div>
         )}
+        {/* Image Section */}
         <img
           src={portfolio.image}
           alt={portfolio.title}
@@ -40,6 +44,7 @@ const PortfolioCardSection = ({ portfolio }) => {
           onLoad={handleImageLoad}
         />
       </div>
+      {/* Text Section */}
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-800 mb-2">
           {portfolio.title}

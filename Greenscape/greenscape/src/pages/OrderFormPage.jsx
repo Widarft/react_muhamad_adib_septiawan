@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import OrderForm from "../components/form/OrderForm";
 
 const OrderFormPage = () => {
+  // Scroll to top of page
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

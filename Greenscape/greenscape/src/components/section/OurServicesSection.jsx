@@ -4,22 +4,18 @@ import servicesData from "../../data/servicesData";
 
 const OurServicesSection = () => {
   const { navigateTo } = useNavigationUtils();
-
-  // State untuk modal
   const [selectedService, setSelectedService] = useState(null);
-
-  // Fungsi untuk menutup modal
   const closeModal = () => setSelectedService(null);
 
   return (
     <section className="py-20 px-4 bg-dark-cream text-main-black">
       <div className="max-w-7xl mx-auto text-center">
-        {/* Judul Section */}
+        {/* Title Section */}
         <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold pb-20">
           OUR SERVICES
         </h3>
 
-        {/* Kartu Layanan */}
+        {/* Card Services */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 pb-20">
           {servicesData.map((service, index) => (
             <div
@@ -27,13 +23,12 @@ const OurServicesSection = () => {
               onClick={() => setSelectedService(service)}
               className="relative w-full md:w-1/3 h-[250px] rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 cursor-pointer"
             >
-              {/* Gambar Latar Belakang */}
+              {/* Image Background */}
               <img
                 src={service.image}
                 alt={service.title}
                 className="w-full h-full object-cover"
               />
-              {/* Overlay Transparan */}
               <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                 <h4 className="text-white text-xl md:text-2xl lg:text-3xl font-bold">
                   {service.title}
@@ -43,7 +38,7 @@ const OurServicesSection = () => {
           ))}
         </div>
 
-        {/* Deskripsi Layanan */}
+        {/* Description Section */}
         <div className="mt-12 max-w-4xl mx-auto">
           <p className="text-sm md:text-base lg:text-lg leading-relaxed">
             At Greenscape, we believe in the power of nature to transform spaces
@@ -56,7 +51,7 @@ const OurServicesSection = () => {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal Selected Services */}
       {selectedService && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"

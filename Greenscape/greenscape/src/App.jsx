@@ -23,6 +23,7 @@ function App() {
     return localStorage.getItem("isAdmin") === "true";
   });
 
+  // Use to remove status admin from localStorage
   const handleLogout = () => {
     setIsAuthenticated(false);
     setIsAdmin(false);
