@@ -8,12 +8,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const usePortfolioStore = create((set) => ({
   portfolios: [],
