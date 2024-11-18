@@ -215,7 +215,7 @@ const OrderForm = () => {
 
         {/* Feedback success */}
         {isSubmitted && (
-          <p className="text-green-500 mb-2 text-center">
+          <p className="text-light-green mb-2 text-center">
             Order has been successfully submitted!
           </p>
         )}

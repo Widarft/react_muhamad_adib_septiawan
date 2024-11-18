@@ -107,7 +107,7 @@ const ContactUsSection = () => {
         {/* Succes Massage */}
         <div className="relative mt-4">
           {isSent && (
-            <p className="text-green-600 absolute inset-0 flex items-center justify-center">
+            <p className="text-light-green absolute inset-0 flex items-center justify-center">
               Your message has been sent!
             </p>
           )}

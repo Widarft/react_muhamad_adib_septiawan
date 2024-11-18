@@ -59,8 +59,8 @@ const PortfolioForm = () => {
       <h1 className="text-2xl font-bold mb-10 text-center text-main-green">
         ADD NEW PROJECT
       </h1>
-      {/* Project Title */}
       <form onSubmit={openModal} className="space-y-4">
+        {/* Project Title */}
         <input
           type="text"
           name="title"
@@ -71,15 +71,24 @@ const PortfolioForm = () => {
           required
         />
         {/* Project Image */}
-        <input
-          type="file"
-          name="imageFile"
-          accept="image/jpeg, image/png"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          className="block w-full px-3 py-2 border border-gray-300 rounded-md"
-          required
-        />
+        <div className="relative w-full">
+          <label
+            htmlFor="imageFile"
+            className="text-gray-500 absolute top-2 left-3"
+          >
+            Upload Project Image (JPEG/PNG)
+          </label>
+          <input
+            id="imageFile"
+            type="file"
+            name="imageFile"
+            accept="image/jpeg, image/png"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="block w-full px-3 py-6 border border-gray-300 rounded-md pt-8"
+            required
+          />
+        </div>
         {imagePreview && (
           <img
             src={imagePreview}
@@ -108,23 +117,43 @@ const PortfolioForm = () => {
           required
         />
         {/* Date Start */}
-        <input
-          type="date"
-          name="startDate"
-          value={form.startDate}
-          onChange={handleChange}
-          className="block w-full px-3 py-2 border border-gray-300 rounded-md"
-          required
-        />
+        <div className="relative w-full">
+          <label
+            htmlFor="startDate"
+            className="text-gray-500 absolute top-2 left-3"
+          >
+            Start Date
+          </label>
+          <input
+            id="startDate"
+            type="date"
+            name="startDate"
+            value={form.startDate}
+            onChange={handleChange}
+            className="block w-full px-3 py-6 border border-gray-300 rounded-md pt-8"
+            required
+          />
+        </div>
+
         {/* Date End */}
-        <input
-          type="date"
-          name="endDate"
-          value={form.endDate}
-          onChange={handleChange}
-          className="block w-full px-3 py-2 border border-gray-300 rounded-md"
-          required
-        />
+        <div className="relative w-full">
+          <label
+            htmlFor="endDate"
+            className="text-gray-500 absolute top-2 left-3"
+          >
+            End Date
+          </label>
+          <input
+            id="endDate"
+            type="date"
+            name="endDate"
+            value={form.endDate}
+            onChange={handleChange}
+            className="block w-full px-3 py-6 border border-gray-300 rounded-md pt-8"
+            required
+          />
+        </div>
+
         {/* Description */}
         <textarea
           name="description"
