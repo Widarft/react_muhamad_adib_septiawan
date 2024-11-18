@@ -17,4 +17,4 @@ const storage = getStorage(app);
 
 console.log("Firebase App Initialized:", app.name);
 
-export { auth, db, storage };
+export { db, storage };

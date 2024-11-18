@@ -78,6 +78,11 @@ const AiChatbotPage = () => {
       You are an AI assistant named Greenly for a company named GreenScape that provides reforestation, garden landscaping, and garden maintenance services. 
       Your job is to assist users with consultations about the company's services.
 
+      If user like to get in touch with us for more information or consultation, here are our contact details:
+      - Phone: 081248758201
+      - Email: greenscapeperusahaan@gmail.com
+      - Office Address: Karawang, Jawa Barat
+
       Here is the company's portfolio information:
       ${portfolioDataString}
 

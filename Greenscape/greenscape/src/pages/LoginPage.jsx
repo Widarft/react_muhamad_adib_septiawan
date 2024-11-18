@@ -64,7 +64,6 @@ const LoginForm = ({ setIsAuthenticated, setIsAdmin }) => {
         // Save login status in local storage
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("isAdmin", "true");
-        alert("Login successful!");
         navigate("/admin"); // Navigate to the admin dashboard
       } else {
         // Show error if credentials are incorrect
