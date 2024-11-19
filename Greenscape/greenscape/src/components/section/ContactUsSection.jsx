@@ -14,20 +14,25 @@ const ContactUsSection = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle submit for send massage to email
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      // Make sure that email addres was correct
       alert("Please enter a valid email address.");
       return;
     }
+
     try {
-      // Send massage to email wirh emailjs
       const response = await sendEmail(formData);
       console.log("SUCCESS!", response.status, response.text);
       setIsSent(true);
+
+      // Reset form data
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
     } catch (error) {
       console.error("FAILED...", error);
     }
@@ -104,7 +109,7 @@ const ContactUsSection = () => {
             SUBMIT
           </button>
         </form>
-        {/* Succes Massage */}
+        {/* Success Message */}
         <div className="relative mt-4">
           {isSent && (
             <p className="text-light-green absolute inset-0 flex items-center justify-center">
