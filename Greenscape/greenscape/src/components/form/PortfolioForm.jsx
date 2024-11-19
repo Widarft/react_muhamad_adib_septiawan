@@ -93,7 +93,7 @@ const PortfolioForm = () => {
           <img
             src={imagePreview}
             alt="Preview"
-            className="w-32 h-32 object-cover my-4"
+            className="max-w-full h-32 object-cover my-4"
           />
         )}
         {/* Project Location */}
