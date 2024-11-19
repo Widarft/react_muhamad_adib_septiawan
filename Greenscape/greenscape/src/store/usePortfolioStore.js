@@ -80,13 +80,37 @@ const usePortfolioStore = create((set) => ({
       return;
     }
     set({ loading: true, error: null });
+
     try {
       const portfolioRef = doc(db, "portfolios", updatedPortfolio.id);
-      await updateDoc(portfolioRef, updatedPortfolio);
+
+      // Default to existing image if no new image is provided
+      let imageUrl = updatedPortfolio.image;
+
+      if (updatedPortfolio.imageFile) {
+        // Handle image upload
+        const storageRef = ref(
+          storage,
+          `portfolios/${Date.now()}_${updatedPortfolio.imageFile.name}`
+        );
+        const snapshot = await uploadBytes(
+          storageRef,
+          updatedPortfolio.imageFile
+        );
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      // Prepare data to update
+      const { imageFile, ...portfolioData } = updatedPortfolio;
+
+      // Update Firestore document
+      await updateDoc(portfolioRef, { ...portfolioData, image: imageUrl });
+
+      // Update Zustand state
       set((state) => ({
         portfolios: state.portfolios.map((portfolio) =>
           portfolio.id === updatedPortfolio.id
-            ? { ...portfolio, ...updatedPortfolio }
+            ? { ...portfolio, ...portfolioData, image: imageUrl }
             : portfolio
         ),
       }));
