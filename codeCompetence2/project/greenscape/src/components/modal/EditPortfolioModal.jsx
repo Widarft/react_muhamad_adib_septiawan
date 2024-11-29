@@ -135,13 +135,16 @@ const EditPortfolioModal = ({ portfolio, onClose }) => {
           {/* Input Category */}
           <div className="mb-4">
             <label className="block text-gray-700">Category</label>
-            <input
-              type="text"
+            <select
               name="category"
               value={formData.category}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded"
-            />
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md"
+            >
+              <option value="Reforestation">Reforestation</option>
+              <option value="Landscape">Landscape</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
           </div>
 
           {/* Input Description */}

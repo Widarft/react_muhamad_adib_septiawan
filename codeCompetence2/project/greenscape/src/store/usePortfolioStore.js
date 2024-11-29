@@ -79,16 +79,20 @@ const usePortfolioStore = create((set) => ({
       console.error("Portfolio ID is undefined or null.");
       return;
     }
+
     set({ loading: true, error: null });
 
     try {
       const portfolioRef = doc(db, "portfolios", updatedPortfolio.id);
 
-      // Default to existing image if no new image is provided
-      let imageUrl = updatedPortfolio.image;
+      const existingDoc = await getDocs(collection(db, "portfolios"));
+      const existingPortfolio = existingDoc.docs
+        .filter((doc) => doc.id === updatedPortfolio.id)
+        .map((doc) => doc.data())[0];
+
+      let imageUrl = updatedPortfolio.image || existingPortfolio.image;
 
       if (updatedPortfolio.imageFile) {
-        // Handle image upload
         const storageRef = ref(
           storage,
           `portfolios/${Date.now()}_${updatedPortfolio.imageFile.name}`
@@ -100,13 +104,14 @@ const usePortfolioStore = create((set) => ({
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      // Prepare data to update
       const { imageFile, ...portfolioData } = updatedPortfolio;
+      const dataToUpdate = {
+        ...portfolioData,
+        image: imageUrl,
+      };
 
-      // Update Firestore document
-      await updateDoc(portfolioRef, { ...portfolioData, image: imageUrl });
+      await updateDoc(portfolioRef, dataToUpdate);
 
-      // Update Zustand state
       set((state) => ({
         portfolios: state.portfolios.map((portfolio) =>
           portfolio.id === updatedPortfolio.id
